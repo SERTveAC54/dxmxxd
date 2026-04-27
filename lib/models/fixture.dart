@@ -43,6 +43,18 @@ class Fixture {
   }
   
   bool get isPatched => startAddress != null;
+  
+  /// Fixture kopyası oluştur (yamalama için)
+  Fixture copyWith({int? startAddress}) {
+    return Fixture(
+      id: id,
+      name: name,
+      manufacturer: manufacturer,
+      channelCount: channelCount,
+      channels: channels,
+      startAddress: startAddress ?? this.startAddress,
+    );
+  }
 }
 
 /// Fikstür kanalı
@@ -89,26 +101,49 @@ class FixtureChannel {
   }
 }
 
-/// Kanal tipleri
+/// Kanal tipleri (Genişletilmiş)
 enum ChannelType {
+  // Hareket
   pan,
   tilt,
+  panFine,
+  tiltFine,
+  
+  // Işık kontrolü
   dimmer,
+  strobe,
+  shutter,
+  
+  // Renk kanalları
   red,
   green,
   blue,
   white,
   amber,
+  uv,
+  cyan,
+  magenta,
+  yellow,
+  
+  // Tekerlek ve efektler
   colorWheel,
   gobo,
   goboRotation,
   prism,
-  zoom,
+  prismRotation,
+  
+  // Optik
   focus,
+  zoom,
   iris,
   frost,
-  strobe,
-  shutter,
+  
+  // Diğer
+  rotation,
+  speed,
+  function,
+  macro,
+  reset,
   generic,
 }
 
