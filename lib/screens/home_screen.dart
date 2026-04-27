@@ -3,8 +3,7 @@ import 'package:provider/provider.dart';
 import '../services/dmx_engine.dart';
 import '../services/artnet_service.dart';
 import '../services/fixture_manager.dart';
-import 'workspace_screen.dart';
-import 'control_screen.dart';
+import 'workspace_screen.dart'; // <--- YENİ WORKSPACE EKRANI
 import 'patch_screen.dart';
 import 'settings_screen.dart';
 
@@ -39,9 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
   
   @override
   Widget build(BuildContext context) {
+    // SADECE 3 SAYFA: Workspace, Patch, Settings
     final pages = [
-      const WorkspaceScreen(),
-      const ControlScreen(),
+      const WorkspaceScreen(), // <--- YENİ WORKSPACE EKRANI
       const PatchScreen(),
       const SettingsScreen(),
     ];
@@ -66,28 +65,22 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _NavButton(
-                  icon: Icons.dashboard,
+                  icon: Icons.dashboard, // <--- Workspace ikonu
                   label: 'Workspace',
                   isSelected: _selectedIndex == 0,
                   onTap: () => setState(() => _selectedIndex = 0),
                 ),
                 _NavButton(
-                  icon: Icons.control_camera,
-                  label: 'Control',
+                  icon: Icons.grid_on,
+                  label: 'Patch',
                   isSelected: _selectedIndex == 1,
                   onTap: () => setState(() => _selectedIndex = 1),
                 ),
                 _NavButton(
-                  icon: Icons.grid_on,
-                  label: 'Patch',
-                  isSelected: _selectedIndex == 2,
-                  onTap: () => setState(() => _selectedIndex = 2),
-                ),
-                _NavButton(
                   icon: Icons.settings,
                   label: 'Settings',
-                  isSelected: _selectedIndex == 3,
-                  onTap: () => setState(() => _selectedIndex = 3),
+                  isSelected: _selectedIndex == 2,
+                  onTap: () => setState(() => _selectedIndex = 2),
                 ),
               ],
             ),
