@@ -1,0 +1,83 @@
+Blocks Lighting Fixture Definitions
+===================================
+
+A set of lighting fixture definitions usable with PIXILAB Blocks 2 or later.
+
+To use these files, copy the desired brand name folder(s) into the fixtures directory located inside your PIXILAB-Blocks-root directory.
+
+**NOTE:** These definitions were partially derived from the excellent _Open Fixture Library_ found at https://open-fixture-library.org ([GitHub repository](https://github.com/OpenLightingProject/open-fixture-library))
+
+## Folder Structure
+
+The _fixtures_ directory holds a simple folder/file structure:
+
+  * It contains one subdirectory per supported brand, plus one named _Generic_, containing a few common definitions that aren't brand specific.
+  * Inside each subdirectory, there's a description file for each fixture, with the fixture's model name. These files have a _.json_ extension, and are formatted according to the JSON standard.
+
+## File Format
+
+The format of the data in each description file is defined by the following types (using _typescript_ notation), where the top level object is of the FixtureDescriptor type:
+
+```typescript
+interface FixtureDescriptor {
+  channels: Channel[];  // The channels supported by this fixture
+  note: string;  // Notes related to this fixture
+}
+
+interface Channel extends Named {
+  type: ChannelTypes;
+  defaultValue?: number; // What value to set channel to on system start-up (not normalized)
+  normalized?: boolean; // Exposed as 0...1 value (else with its full range depending on resolution)
+  multiFunc?: "color" | "position"; // Explicitly marks channel as part of multiFunc Task callable 
+  hidden?: boolean; // Not shown in UI (used to represent "gaps" in the channel sequence)
+  ranges?: Range[]; // When type is Ranges
+}
+
+type ChannelTypes = 'Analog_8'|'Analog_16'|'Analog_24'|'Ranges';
+
+interface Range extends Named {
+  first: number;   // First value corresponding to this mode
+  last?: number;	// Last value (same as first if not specified)
+  discrete?: boolean; // Is discrete (single enum) value only, with no "range" within
+  defaultValue?: number; // What value to set channel to on system start-up (normalized 0...1)
+}
+
+interface Named {
+  name: string;
+}
+```
+
+Each FixtureDescriptor contains a list of channels. A channel can be of one of four types, where the first three represent an analog value wth 8, 16 or 24 bits resolution (mapping to one, two or three DMX channels). Such an analog value can also accept the following optional properties:
+
+  * **defaultValue** specifies the initial value of the channel. If not specified, the initial value will be zero.
+  * **normalized** set to true indicates that the value will be presented as 0...1 in the user interface. If not specified, or set to false, the value will be represented by its full numeric span (e.g., 0...255 for an 8-bit channel, 0...65535 for a 16-bit channel)
+  * **hidden** set to true hides the channel from the user interface, thereby blocking out "unused" slots in the channel space.
+
+Alternatively the type is defined as 'Ranges', which describes a channel divided into sub-ranges,  consisting of a number of consecutive values. These ranges are defined in the _ranges_ array, specifying the lower and upper limits of the range. If this range describes a single state (e.g., "strobe off"), the _discrete_ flag is set to indicate this. Otherwise, the range is considered to also have a numberic value, which maps into whatever range is specified (e.g., varying "strobe rates").
+
+### Property Bindings and Task Access
+
+Each defined channel will be made available as a property on the fixture object, accessible through property binding or from tasks. Tasks may also control color and position using callable functions defined as "multiFunc", allowing all related values to be set in one go. This applies to color/dimmer as well as position/zoom. You can (in Blocks 5.2 or later) explicitly mark channels as part of such a "multiFunc" group by specifying this as shown above to "color" or "position". If not specified explicitly, Blocks will use internal heuristics to expose channels such as Red/Green/Blue and Pan/Tilt as multiFunc groups.
+
+## Example File Structure
+
+Here's an example of what the content of a description file can look like, taken from the generic _Pan Tilt_ model:
+
+```json
+{
+  "note": "Moving Head, 8-bit",
+  "channels": [
+    {
+      "name": "Pan",
+      "type": "Analog_8",
+      "normalized": true,
+      "defaultValue": 127
+    }, {
+      "name": "Tilt",
+      "type": "Analog_8",
+      "normalized": true,
+      "defaultValue": 127
+    }
+  ]
+}
+```

@@ -22,7 +22,26 @@ class FixtureManager extends ChangeNotifier {
     try {
       debugPrint('📦 Kütüphane yükleniyor...');
       
-      // Web için fallback: Direkt library.json oku
+      // Önce library_full.json'u dene (tüm fixture'lar burada)
+      try {
+        final String jsonStr = await rootBundle.loadString('assets/fixtures/library_full.json');
+        final dynamic data = jsonDecode(jsonStr);
+        
+        if (data is List) {
+          for (var deviceData in data) {
+            _parseAndAddFixture(deviceData, 'assets/fixtures/library_full.json');
+          }
+          
+          _fixtureLibrary.sort((a, b) => a.name.compareTo(b.name));
+          notifyListeners();
+          debugPrint("✅ Kütüphane Yüklendi: ${_fixtureLibrary.length} Cihaz Hazır!");
+          return;
+        }
+      } catch (e) {
+        debugPrint('⚠️ library_full.json yüklenemedi, library.json deneniyor...');
+      }
+      
+      // Fallback: library.json
       try {
         final String jsonStr = await rootBundle.loadString('assets/fixtures/library.json');
         final dynamic data = jsonDecode(jsonStr);
@@ -85,12 +104,19 @@ class FixtureManager extends ChangeNotifier {
   /// Tek bir fixture objesini parse edip listeye ekle
   void _parseAndAddFixture(Map<String, dynamic> data, String path) {
     try {
-      // Dosya yolundan marka ve model adını çıkar
+      // Eğer fixture'ın kendi manufacturer bilgisi varsa onu kullan
+      String brandName = data['manufacturer'] ?? data['brand'] ?? 'Generic';
+      
+      // Eğer yoksa dosya yolundan çıkarmaya çalış
+      if (brandName == 'Generic' && !path.contains('library_full.json')) {
+        final pathSegments = path.split('/');
+        if (pathSegments.length > 2) {
+          brandName = pathSegments[pathSegments.length - 2];
+        }
+      }
+      
       final pathSegments = path.split('/');
       final fileName = pathSegments.last.replaceAll('.json', '');
-      final brandName = pathSegments.length > 2 
-          ? pathSegments[pathSegments.length - 2] 
-          : 'Generic';
       
       final String deviceName = data['name'] ?? fileName;
       final List<dynamic> channels = data['channels'] ?? [];
