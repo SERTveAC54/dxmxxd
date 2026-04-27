@@ -1,0 +1,200 @@
+{
+    "channels": [
+        {
+            "name": "Strobe",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "ShutterStrobe",
+                    "first": 0,
+                    "last": 19
+                }
+            ]
+        },
+        {
+            "name": "Dimmer",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Cyan",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Magenta",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Yellow",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "CTO",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Color Wheel",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "WheelSlot",
+                    "first": 0,
+                    "last": 0,
+                    "discrete": true
+                },
+                {
+                    "name": "WheelRotation",
+                    "first": 193,
+                    "last": 214
+                },
+                {
+                    "name": "Random color",
+                    "first": 244,
+                    "last": 247,
+                    "discrete": true
+                }
+            ]
+        },
+        {
+            "name": "Rotating Gobo Wheel",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "WheelSlot",
+                    "first": 0,
+                    "last": 2,
+                    "discrete": true
+                },
+                {
+                    "name": "WheelShake",
+                    "first": 81,
+                    "last": 90
+                },
+                {
+                    "name": "WheelRotation",
+                    "first": 201,
+                    "last": 228
+                }
+            ]
+        },
+        {
+            "name": "Fixed Gobo Wheel",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "WheelSlot",
+                    "first": 0,
+                    "last": 20
+                },
+                {
+                    "name": "WheelShake",
+                    "first": 201,
+                    "last": 201,
+                    "discrete": true
+                },
+                {
+                    "name": "WheelRotation",
+                    "first": 204,
+                    "last": 220
+                },
+                {
+                    "name": "Random gobo",
+                    "first": 244,
+                    "last": 247,
+                    "discrete": true
+                }
+            ]
+        },
+        {
+            "name": "Frost",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "Frost",
+                    "first": 0,
+                    "last": 127
+                }
+            ]
+        },
+        {
+            "name": "Prism deployment",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "NoFunction",
+                    "first": 0,
+                    "last": 10
+                },
+                {
+                    "name": "Prism",
+                    "first": 11,
+                    "last": 20
+                }
+            ]
+        },
+        {
+            "name": "Prism rotation",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "PrismRotation",
+                    "first": 0,
+                    "last": 2,
+                    "discrete": true
+                }
+            ]
+        },
+        {
+            "name": "Prism lineator",
+            "type": "Analog_8",
+            "normalized": true,
+            "defaultValue": 128
+        },
+        {
+            "name": "Zoom",
+            "type": "Analog_8",
+            "normalized": true,
+            "defaultValue": 128
+        },
+        {
+            "name": "Focus",
+            "type": "Analog_16",
+            "normalized": true,
+            "defaultValue": 32768
+        },
+        {
+            "name": "Pan",
+            "type": "Analog_16",
+            "normalized": true,
+            "defaultValue": 32768
+        },
+        {
+            "name": "Tilt",
+            "type": "Analog_16",
+            "normalized": true,
+            "defaultValue": 32768
+        },
+        {
+            "name": "Fixture control settings",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "NoFunction",
+                    "first": 0,
+                    "last": 9
+                },
+                {
+                    "name": "Maintenance",
+                    "first": 10,
+                    "last": 14,
+                    "discrete": true
+                }
+            ]
+        }
+    ],
+    "note": "Moving Head, Color Changer (imported from open-fixture-library)"
+}

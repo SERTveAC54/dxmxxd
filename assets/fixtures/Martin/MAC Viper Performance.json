@@ -1,0 +1,248 @@
+{
+    "channels": [
+        {
+            "name": "Strobe / Shutter",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "ShutterStrobe",
+                    "first": 0,
+                    "last": 19
+                }
+            ]
+        },
+        {
+            "name": "Dimmer fade",
+            "type": "Analog_16",
+            "normalized": true
+        },
+        {
+            "name": "Cyan",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Magenta",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Yellow",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "CTO",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Color Wheel",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "WheelSlot",
+                    "first": 0,
+                    "last": 0,
+                    "discrete": true
+                },
+                {
+                    "name": "WheelRotation",
+                    "first": 193,
+                    "last": 214
+                },
+                {
+                    "name": "Random color",
+                    "first": 244,
+                    "last": 247,
+                    "discrete": true
+                }
+            ]
+        },
+        {
+            "name": "Gobo Wheel",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "WheelSlot",
+                    "first": 0,
+                    "last": 9
+                },
+                {
+                    "name": "WheelShake",
+                    "first": 60,
+                    "last": 89
+                },
+                {
+                    "name": "WheelRotation",
+                    "first": 210,
+                    "last": 232
+                }
+            ]
+        },
+        {
+            "name": "Animation Wheel",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "NoFunction",
+                    "first": 0,
+                    "last": 10
+                },
+                {
+                    "name": "Generic",
+                    "first": 11,
+                    "last": 20
+                },
+                {
+                    "name": "WheelRotation",
+                    "first": 41,
+                    "last": 50
+                }
+            ]
+        },
+        {
+            "name": "Framing blade 1, position",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Framing blade 1, angle",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "BladeRotation",
+                    "first": 0,
+                    "last": 126
+                }
+            ]
+        },
+        {
+            "name": "Framing blade 2, position",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Framing blade 2, angle",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "BladeRotation",
+                    "first": 0,
+                    "last": 126
+                }
+            ]
+        },
+        {
+            "name": "Framing blade 3, position",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Framing blade 3, angle",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "BladeRotation",
+                    "first": 0,
+                    "last": 126
+                }
+            ]
+        },
+        {
+            "name": "Framing blade 4, position",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Framing blade 4, angle",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "BladeRotation",
+                    "first": 0,
+                    "last": 126
+                }
+            ]
+        },
+        {
+            "name": "Framing indexing angle",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "BladeSystemRotation",
+                    "first": 0,
+                    "last": 126
+                }
+            ]
+        },
+        {
+            "name": "Frost",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Prism",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "NoFunction",
+                    "first": 0,
+                    "last": 10
+                },
+                {
+                    "name": "Prism",
+                    "first": 11,
+                    "last": 138
+                }
+            ]
+        },
+        {
+            "name": "Iris",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Zoom",
+            "type": "Analog_16",
+            "normalized": true,
+            "defaultValue": 32768
+        },
+        {
+            "name": "Focus",
+            "type": "Analog_16",
+            "normalized": true,
+            "defaultValue": 32768
+        },
+        {
+            "name": "Pan",
+            "type": "Analog_16",
+            "normalized": true,
+            "defaultValue": 32768
+        },
+        {
+            "name": "Tilt",
+            "type": "Analog_16",
+            "normalized": true,
+            "defaultValue": 32768
+        },
+        {
+            "name": "Fixture control/settings",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "NoFunction",
+                    "first": 0,
+                    "last": 9
+                },
+                {
+                    "name": "Maintenance",
+                    "first": 10,
+                    "last": 14,
+                    "discrete": true
+                }
+            ]
+        }
+    ],
+    "note": "Moving Head, Color Changer (imported from open-fixture-library)"
+}

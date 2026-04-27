@@ -1,0 +1,49 @@
+{
+    "channels": [
+        {
+            "name": "Pan",
+            "type": "Analog_16",
+            "normalized": true,
+            "defaultValue": 128
+        },
+        {
+            "name": "Tilt",
+            "type": "Analog_16",
+            "normalized": true,
+            "defaultValue": 128
+        },
+        {
+            "name": "Color macros",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "ColorPreset",
+                    "first": 0,
+                    "last": 15
+                }
+            ]
+        },
+        {
+            "name": "Shutter",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "NoFunction",
+                    "first": 0,
+                    "last": 20
+                },
+                {
+                    "name": "Maintenance",
+                    "first": 21,
+                    "last": 30
+                },
+                {
+                    "name": "ShutterStrobe",
+                    "first": 31,
+                    "last": 200
+                }
+            ]
+        }
+    ],
+    "note": "Moving Head, Color Changer (imported from open-fixture-library)"
+}

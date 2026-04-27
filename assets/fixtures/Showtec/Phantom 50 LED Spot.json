@@ -1,0 +1,223 @@
+{
+    "channels": [
+        {
+            "name": "Pan",
+            "type": "Analog_16",
+            "normalized": true,
+            "defaultValue": 128
+        },
+        {
+            "name": "Tilt",
+            "type": "Analog_16",
+            "normalized": true,
+            "defaultValue": 128
+        },
+        {
+            "name": "Pan/Tilt Speed",
+            "type": "Analog_8",
+            "normalized": true,
+            "defaultValue": 128
+        },
+        {
+            "name": "Color Wheel",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "WheelSlot",
+                    "first": 0,
+                    "last": 6,
+                    "discrete": true
+                },
+                {
+                    "name": "WheelRotation",
+                    "first": 128,
+                    "last": 191
+                }
+            ]
+        },
+        {
+            "name": "Strobe",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "ShutterStrobe",
+                    "first": 0,
+                    "last": 3,
+                    "discrete": true
+                }
+            ]
+        },
+        {
+            "name": "Intensity",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Gobo",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "WheelSlot",
+                    "first": 0,
+                    "last": 7,
+                    "discrete": true
+                },
+                {
+                    "name": "WheelShake",
+                    "first": 64,
+                    "last": 71,
+                    "discrete": true
+                },
+                {
+                    "name": "WheelRotation",
+                    "first": 128,
+                    "last": 191
+                }
+            ]
+        },
+        {
+            "name": "Gobo Rotation",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "WheelSlotRotation",
+                    "first": 0,
+                    "last": 7,
+                    "discrete": true
+                },
+                {
+                    "name": "WheelShake",
+                    "first": 232,
+                    "last": 255
+                }
+            ]
+        },
+        {
+            "name": "Prism",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "NoFunction",
+                    "first": 0,
+                    "last": 15
+                },
+                {
+                    "name": "Prism",
+                    "first": 16,
+                    "last": 255
+                }
+            ]
+        },
+        {
+            "name": "Functions",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "NoFunction",
+                    "first": 0,
+                    "last": 7,
+                    "discrete": true
+                },
+                {
+                    "name": "Maintenance",
+                    "first": 8,
+                    "last": 27
+                }
+            ]
+        },
+        {
+            "name": "Programs",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "NoFunction",
+                    "first": 0,
+                    "last": 7,
+                    "discrete": true
+                },
+                {
+                    "name": "Built-in Program 1",
+                    "first": 8,
+                    "last": 23
+                },
+                {
+                    "name": "Built-in Program 2",
+                    "first": 24,
+                    "last": 39
+                },
+                {
+                    "name": "Built-in Program 3",
+                    "first": 40,
+                    "last": 55
+                },
+                {
+                    "name": "Built-in Program 4",
+                    "first": 56,
+                    "last": 71
+                },
+                {
+                    "name": "Built-in Program 5",
+                    "first": 72,
+                    "last": 87
+                },
+                {
+                    "name": "Built-in Program 6",
+                    "first": 88,
+                    "last": 103
+                },
+                {
+                    "name": "Built-in Program 7",
+                    "first": 104,
+                    "last": 119
+                },
+                {
+                    "name": "Built-in Program 8",
+                    "first": 120,
+                    "last": 135
+                },
+                {
+                    "name": "Sound-controlled Program 1",
+                    "first": 136,
+                    "last": 151
+                },
+                {
+                    "name": "Sound-controlled Program 2",
+                    "first": 152,
+                    "last": 167
+                },
+                {
+                    "name": "Sound-controlled Program 3",
+                    "first": 168,
+                    "last": 183
+                },
+                {
+                    "name": "Sound-controlled Program 4",
+                    "first": 184,
+                    "last": 199
+                },
+                {
+                    "name": "Sound-controlled Program 5",
+                    "first": 200,
+                    "last": 215
+                },
+                {
+                    "name": "Sound-controlled Program 6",
+                    "first": 216,
+                    "last": 231
+                },
+                {
+                    "name": "Sound-controlled Program 7",
+                    "first": 232,
+                    "last": 247
+                },
+                {
+                    "name": "Sound-controlled Program 8",
+                    "first": 248,
+                    "last": 255,
+                    "discrete": true
+                }
+            ]
+        }
+    ],
+    "note": "Moving Head, Color Changer (imported from open-fixture-library)"
+}

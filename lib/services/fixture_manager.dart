@@ -20,7 +20,28 @@ class FixtureManager extends ChangeNotifier {
   /// Pixilab JSON Fikstür kütüphanesini assets'ten yükle
   Future<void> _loadPixilabLibrary() async {
     try {
-      // Uygulamaya gömülü tüm dosyaların haritasını (manifest) al
+      debugPrint('📦 Kütüphane yükleniyor...');
+      
+      // Web için fallback: Direkt library.json oku
+      try {
+        final String jsonStr = await rootBundle.loadString('assets/fixtures/library.json');
+        final dynamic data = jsonDecode(jsonStr);
+        
+        if (data is List) {
+          for (var deviceData in data) {
+            _parseAndAddFixture(deviceData, 'assets/fixtures/library.json');
+          }
+          
+          _fixtureLibrary.sort((a, b) => a.name.compareTo(b.name));
+          notifyListeners();
+          debugPrint("✅ Kütüphane Yüklendi: ${_fixtureLibrary.length} Cihaz Hazır!");
+          return;
+        }
+      } catch (e) {
+        debugPrint('⚠️ library.json yüklenemedi, AssetManifest deneniyor...');
+      }
+      
+      // AssetManifest ile tüm dosyaları tara (Native platformlar için)
       final manifestContent = await rootBundle.loadString('AssetManifest.json');
       final Map<String, dynamic> manifestMap = jsonDecode(manifestContent);
       

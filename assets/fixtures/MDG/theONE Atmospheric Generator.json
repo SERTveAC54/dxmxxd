@@ -1,0 +1,53 @@
+{
+    "channels": [
+        {
+            "name": "Power",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "Maintenance",
+                    "first": 0,
+                    "last": 127
+                }
+            ]
+        },
+        {
+            "name": "Haze / Fog",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "FogType",
+                    "first": 0,
+                    "last": 127
+                }
+            ]
+        },
+        {
+            "name": "Fog output",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Fog on/off",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "NoFunction",
+                    "first": 0,
+                    "last": 127
+                },
+                {
+                    "name": "Fog",
+                    "first": 128,
+                    "last": 255
+                }
+            ]
+        },
+        {
+            "name": "External Fan",
+            "type": "Analog_8",
+            "normalized": true
+        }
+    ],
+    "note": "Hazer, Smoke (imported from open-fixture-library)"
+}

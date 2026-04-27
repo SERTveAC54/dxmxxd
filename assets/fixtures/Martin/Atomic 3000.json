@@ -1,0 +1,17 @@
+{
+    "channels": [
+        {
+            "name": "Strobe",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "ShutterStrobe",
+                    "first": 0,
+                    "last": 5,
+                    "discrete": true
+                }
+            ]
+        }
+    ],
+    "note": "Strobe (imported from open-fixture-library)"
+}

@@ -1,0 +1,21 @@
+{
+    "channels": [
+        {
+            "name": "Fog & Color Change",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "NoFunction",
+                    "first": 0,
+                    "last": 31
+                },
+                {
+                    "name": "Fog",
+                    "first": 32,
+                    "last": 255
+                }
+            ]
+        }
+    ],
+    "note": "Smoke, Color Changer (imported from open-fixture-library)"
+}

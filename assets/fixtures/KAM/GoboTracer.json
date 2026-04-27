@@ -1,0 +1,133 @@
+{
+    "channels": [
+        {
+            "name": "Pan",
+            "type": "Analog_16",
+            "normalized": true,
+            "defaultValue": 32767
+        },
+        {
+            "name": "Tilt",
+            "type": "Analog_16",
+            "normalized": true,
+            "defaultValue": 32767
+        },
+        {
+            "name": "Color Wheel",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "WheelSlot",
+                    "first": 0,
+                    "last": 9
+                },
+                {
+                    "name": "WheelRotation",
+                    "first": 160,
+                    "last": 255
+                }
+            ]
+        },
+        {
+            "name": "Gobo Wheel",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "WheelSlot",
+                    "first": 0,
+                    "last": 7,
+                    "discrete": true
+                },
+                {
+                    "name": "WheelShake",
+                    "first": 64,
+                    "last": 127
+                },
+                {
+                    "name": "WheelRotation",
+                    "first": 128,
+                    "last": 255
+                }
+            ]
+        },
+        {
+            "name": "Strobe",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Dimmer",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Horizontal Vertical Run",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Auto Mode",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "NoFunction",
+                    "first": 0,
+                    "last": 59
+                },
+                {
+                    "name": "Auto mode 3",
+                    "first": 60,
+                    "last": 84
+                },
+                {
+                    "name": "Auto mode 2",
+                    "first": 85,
+                    "last": 109
+                },
+                {
+                    "name": "Auto mode 1",
+                    "first": 110,
+                    "last": 134
+                },
+                {
+                    "name": "Sound-to-light mode 0",
+                    "first": 135,
+                    "last": 159
+                },
+                {
+                    "name": "Sound-to-light mode 3",
+                    "first": 160,
+                    "last": 184
+                },
+                {
+                    "name": "Sound-to-light mode 2",
+                    "first": 185,
+                    "last": 209
+                },
+                {
+                    "name": "Sound-to-light mode 1",
+                    "first": 210,
+                    "last": 234
+                }
+            ]
+        },
+        {
+            "name": "Reset",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "NoFunction",
+                    "first": 0,
+                    "last": 249
+                },
+                {
+                    "name": "Maintenance",
+                    "first": 250,
+                    "last": 255,
+                    "discrete": true
+                }
+            ]
+        }
+    ],
+    "note": "Moving Head, Color Changer (imported from open-fixture-library)"
+}

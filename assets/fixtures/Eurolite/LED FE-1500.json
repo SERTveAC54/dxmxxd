@@ -1,0 +1,207 @@
+{
+    "channels": [
+        {
+            "name": "Operating Mode",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "ShutterStrobe",
+                    "first": 0,
+                    "last": 9
+                },
+                {
+                    "name": "Aut0: Laser + RGBWA LEDs + white LEDs",
+                    "first": 10,
+                    "last": 24
+                },
+                {
+                    "name": "Aut1: Laser + RGBWA LEDs",
+                    "first": 25,
+                    "last": 39
+                },
+                {
+                    "name": "Aut2: Laser + white LEDs",
+                    "first": 40,
+                    "last": 54
+                },
+                {
+                    "name": "Aut3: RGBWA LEDs + white LEDs",
+                    "first": 55,
+                    "last": 69
+                },
+                {
+                    "name": "Aut4: RGBWA LEDs",
+                    "first": 70,
+                    "last": 84
+                },
+                {
+                    "name": "Aut5: Laser",
+                    "first": 85,
+                    "last": 99
+                },
+                {
+                    "name": "Aut6: white LEDs",
+                    "first": 100,
+                    "last": 114
+                },
+                {
+                    "name": "Sou0: Laser + RGBWA LEDs + white LEDs",
+                    "first": 115,
+                    "last": 129
+                },
+                {
+                    "name": "Sou1: Laser + RGBWA LEDs",
+                    "first": 130,
+                    "last": 144
+                },
+                {
+                    "name": "Sou2: Laser + white LEDs",
+                    "first": 145,
+                    "last": 159
+                },
+                {
+                    "name": "Sou3: RGBWA LEDs + white LEDs",
+                    "first": 160,
+                    "last": 174
+                },
+                {
+                    "name": "Sou4: RGBWA LEDs",
+                    "first": 175,
+                    "last": 189
+                },
+                {
+                    "name": "Sou5: Laser",
+                    "first": 190,
+                    "last": 204
+                },
+                {
+                    "name": "Sou6: white LEDs",
+                    "first": 205,
+                    "last": 219
+                },
+                {
+                    "name": "NoFunction",
+                    "first": 220,
+                    "last": 255
+                }
+            ]
+        },
+        {
+            "name": "RGBWA LEDs",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "ColorPreset",
+                    "first": 0,
+                    "last": 9
+                },
+                {
+                    "name": "Automatic color change (one color)",
+                    "first": 165,
+                    "last": 209
+                },
+                {
+                    "name": "Automatic color change (two colors)",
+                    "first": 210,
+                    "last": 255
+                }
+            ]
+        },
+        {
+            "name": "Color Change Speed",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "RGBWA LED Strobe",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "NoFunction",
+                    "first": 0,
+                    "last": 4,
+                    "discrete": true
+                },
+                {
+                    "name": "ShutterStrobe",
+                    "first": 5,
+                    "last": 254
+                }
+            ]
+        },
+        {
+            "name": "White LED Strobe",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "NoFunction",
+                    "first": 0,
+                    "last": 9
+                },
+                {
+                    "name": "ShutterStrobe",
+                    "first": 10,
+                    "last": 19
+                }
+            ]
+        },
+        {
+            "name": "Laser",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "NoFunction",
+                    "first": 0,
+                    "last": 9
+                },
+                {
+                    "name": "ColorPreset",
+                    "first": 10,
+                    "last": 49
+                }
+            ]
+        },
+        {
+            "name": "Laser Strobe",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "NoFunction",
+                    "first": 0,
+                    "last": 4,
+                    "discrete": true
+                },
+                {
+                    "name": "ShutterStrobe",
+                    "first": 5,
+                    "last": 254
+                }
+            ]
+        },
+        {
+            "name": "RGBWA LED rotation",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "Rotation",
+                    "first": 0,
+                    "last": 4,
+                    "discrete": true
+                }
+            ]
+        },
+        {
+            "name": "Laser rotation",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "Rotation",
+                    "first": 0,
+                    "last": 4,
+                    "discrete": true
+                }
+            ]
+        }
+    ],
+    "note": "Flower, Laser, Strobe, Color Changer (imported from open-fixture-library)"
+}

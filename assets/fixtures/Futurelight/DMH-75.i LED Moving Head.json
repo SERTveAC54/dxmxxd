@@ -1,0 +1,206 @@
+{
+    "channels": [
+        {
+            "name": "Pan",
+            "type": "Analog_16",
+            "normalized": true,
+            "defaultValue": 128
+        },
+        {
+            "name": "Tilt",
+            "type": "Analog_16",
+            "normalized": true,
+            "defaultValue": 128
+        },
+        {
+            "name": "Pan / Tilt Speed",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Pan / Tilt function",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "NoFunction",
+                    "first": 0,
+                    "last": 15
+                },
+                {
+                    "name": "Maintenance",
+                    "first": 16,
+                    "last": 31
+                },
+                {
+                    "name": "Pan rotation forwards",
+                    "first": 32,
+                    "last": 47
+                },
+                {
+                    "name": "Pan rotation backwards",
+                    "first": 48,
+                    "last": 63
+                },
+                {
+                    "name": "Tilt rotation forwards",
+                    "first": 64,
+                    "last": 79
+                },
+                {
+                    "name": "Tilt rotation backwards",
+                    "first": 80,
+                    "last": 95
+                },
+                {
+                    "name": "Pan / Tilt rotation forwards",
+                    "first": 96,
+                    "last": 111
+                },
+                {
+                    "name": "Pan / Tilt rotation backwards",
+                    "first": 112,
+                    "last": 127
+                },
+                {
+                    "name": "Pan rotation forwards, Tilt rotation backwards",
+                    "first": 128,
+                    "last": 143
+                },
+                {
+                    "name": "Pan rotation backwards, Tilt rotation forwards",
+                    "first": 144,
+                    "last": 159
+                }
+            ]
+        },
+        {
+            "name": "Shutter / Strobe basic",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "ShutterStrobe",
+                    "first": 0,
+                    "last": 31
+                }
+            ]
+        },
+        {
+            "name": "Dimmer intensity",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Color wheel basic",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "WheelSlot",
+                    "first": 0,
+                    "last": 5,
+                    "discrete": true
+                },
+                {
+                    "name": "WheelShake",
+                    "first": 107,
+                    "last": 119
+                },
+                {
+                    "name": "WheelRotation",
+                    "first": 224,
+                    "last": 239
+                }
+            ]
+        },
+        {
+            "name": "Gobo wheel basic",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "WheelSlot",
+                    "first": 0,
+                    "last": 5,
+                    "discrete": true
+                },
+                {
+                    "name": "NoFunction",
+                    "first": 96,
+                    "last": 97,
+                    "discrete": true
+                },
+                {
+                    "name": "WheelShake",
+                    "first": 98,
+                    "last": 115
+                },
+                {
+                    "name": "WheelRotation",
+                    "first": 224,
+                    "last": 224,
+                    "discrete": true
+                }
+            ]
+        },
+        {
+            "name": "Gobo rotation basic",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "WheelSlotRotation",
+                    "first": 0,
+                    "last": 191
+                },
+                {
+                    "name": "Motion macro forwards",
+                    "first": 192,
+                    "last": 207
+                },
+                {
+                    "name": "Motion macro backwards",
+                    "first": 208,
+                    "last": 223
+                }
+            ]
+        },
+        {
+            "name": "Prism",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "NoFunction",
+                    "first": 0,
+                    "last": 3,
+                    "discrete": true
+                },
+                {
+                    "name": "Prism",
+                    "first": 4,
+                    "last": 127
+                }
+            ]
+        },
+        {
+            "name": "Focus",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Reset, display control",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "NoFunction",
+                    "first": 0,
+                    "last": 7,
+                    "discrete": true
+                },
+                {
+                    "name": "Maintenance",
+                    "first": 8,
+                    "last": 15,
+                    "discrete": true
+                }
+            ]
+        }
+    ],
+    "note": "Moving Head, Color Changer (imported from open-fixture-library)"
+}

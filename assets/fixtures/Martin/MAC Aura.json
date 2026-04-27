@@ -1,0 +1,119 @@
+{
+    "channels": [
+        {
+            "name": "Shutter",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "ShutterStrobe",
+                    "first": 0,
+                    "last": 19
+                }
+            ]
+        },
+        {
+            "name": "Beam dimmer",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Zoom",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Pan",
+            "type": "Analog_16",
+            "normalized": true,
+            "defaultValue": 32767
+        },
+        {
+            "name": "Tilt",
+            "type": "Analog_16",
+            "normalized": true,
+            "defaultValue": 32767
+        },
+        {
+            "name": "Fixture control settings",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "NoFunction",
+                    "first": 0,
+                    "last": 9
+                },
+                {
+                    "name": "Maintenance",
+                    "first": 10,
+                    "last": 14,
+                    "discrete": true
+                }
+            ]
+        },
+        {
+            "name": "Beam color wheel effect",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "NoFunction",
+                    "first": 0,
+                    "last": 9
+                },
+                {
+                    "name": "ColorPreset",
+                    "first": 10,
+                    "last": 14,
+                    "discrete": true
+                },
+                {
+                    "name": "Effect",
+                    "first": 180,
+                    "last": 201
+                },
+                {
+                    "name": "Random color",
+                    "first": 235,
+                    "last": 239,
+                    "discrete": true
+                }
+            ]
+        },
+        {
+            "name": "Beam red",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Beam green",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Beam blue",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Beam white",
+            "type": "Analog_8",
+            "normalized": true
+        },
+        {
+            "name": "Beam CTC",
+            "type": "Ranges",
+            "ranges": [
+                {
+                    "name": "NoFunction",
+                    "first": 0,
+                    "last": 19
+                },
+                {
+                    "name": "ColorTemperature-10000K-2500K",
+                    "first": 20,
+                    "last": 255
+                }
+            ]
+        }
+    ],
+    "note": "Moving Head, Color Changer (imported from open-fixture-library)"
+}
