@@ -17,10 +17,10 @@ class FixtureManager extends ChangeNotifier {
     _loadPatchedFixtures();
   }
   
-  /// Fikstür kütüphanesini yükle (assets'ten veya local'den)
+  /// Fikstür kütüphanesini yükle - Profesyonel cihazlar
   Future<void> _loadFixtureLibrary() async {
     try {
-      // Örnek fikstürleri yükle
+      // Profesyonel fikstürleri yükle
       _fixtureLibrary.addAll(_getDefaultFixtures());
       notifyListeners();
     } catch (e) {
@@ -57,16 +57,7 @@ class FixtureManager extends ChangeNotifier {
       throw Exception('Adres çakışması! Bu adres aralığı kullanımda.');
     }
     
-    final patchedFixture = Fixture(
-      id: '${fixture.id}_${DateTime.now().millisecondsSinceEpoch}',
-      name: fixture.name,
-      manufacturer: fixture.manufacturer,
-      channelCount: fixture.channelCount,
-      channels: fixture.channels,
-      startAddress: startAddress,
-    );
-    
-    _patchedFixtures.add(patchedFixture);
+    _patchedFixtures.add(fixture.copyWith(startAddress: startAddress));
     await _savePatchedFixtures();
     notifyListeners();
   }
@@ -102,54 +93,56 @@ class FixtureManager extends ChangeNotifier {
     await prefs.setString('patched_fixtures', json);
   }
   
-  /// Varsayılan fikstür örnekleri
+  /// Varsayılan fikstür örnekleri (Sektör standartları)
   List<Fixture> _getDefaultFixtures() {
     return [
-      // Moving Head Beam
+      // 7R Beam (Profesyonel)
       Fixture(
-        id: 'beam_230w',
-        name: 'Beam 230W Moving Head',
+        id: '7r_beam',
+        name: 'Beam 7R (16Ch)',
         manufacturer: 'Generic',
         channelCount: 16,
         channels: [
-          FixtureChannel(offset: 0, name: 'Pan', type: ChannelType.pan, fineOffset: 1),
-          FixtureChannel(offset: 1, name: 'Pan Fine', type: ChannelType.panFine),
-          FixtureChannel(offset: 2, name: 'Tilt', type: ChannelType.tilt, fineOffset: 3),
-          FixtureChannel(offset: 3, name: 'Tilt Fine', type: ChannelType.tiltFine),
-          FixtureChannel(offset: 4, name: 'Dimmer', type: ChannelType.dimmer),
-          FixtureChannel(offset: 5, name: 'Strobe', type: ChannelType.strobe),
-          FixtureChannel(offset: 6, name: 'Color Wheel', type: ChannelType.colorWheel, presets: [
-            ChannelPreset(name: 'Open', value: 0),
-            ChannelPreset(name: 'Red', value: 18),
-            ChannelPreset(name: 'Blue', value: 37),
-            ChannelPreset(name: 'Green', value: 56),
-            ChannelPreset(name: 'Yellow', value: 75),
-            ChannelPreset(name: 'Magenta', value: 94),
-            ChannelPreset(name: 'Cyan', value: 113),
-          ]),
-          FixtureChannel(offset: 7, name: 'Gobo', type: ChannelType.gobo, presets: [
-            ChannelPreset(name: 'Open', value: 0),
-            ChannelPreset(name: 'Gobo 1 (Dots)', value: 10),
-            ChannelPreset(name: 'Gobo 2 (Star)', value: 20),
-            ChannelPreset(name: 'Gobo 3 (Spiral)', value: 30),
-            ChannelPreset(name: 'Gobo 4 (Tunnel)', value: 40),
-          ]),
-          FixtureChannel(offset: 8, name: 'Gobo Rotation', type: ChannelType.goboRotation),
-          FixtureChannel(offset: 9, name: 'Prism', type: ChannelType.prism, presets: [
-            ChannelPreset(name: 'Open', value: 0),
-            ChannelPreset(name: '3-Facet', value: 64),
-            ChannelPreset(name: '8-Facet', value: 128),
-          ]),
-          FixtureChannel(offset: 10, name: 'Prism Rotation', type: ChannelType.prismRotation),
-          FixtureChannel(offset: 11, name: 'Focus', type: ChannelType.focus),
-          FixtureChannel(offset: 12, name: 'Zoom', type: ChannelType.zoom),
-          FixtureChannel(offset: 13, name: 'Frost', type: ChannelType.frost),
-          FixtureChannel(offset: 14, name: 'Speed', type: ChannelType.speed),
-          FixtureChannel(offset: 15, name: 'Function', type: ChannelType.function),
+          FixtureChannel(offset: 0, name: 'Color Wheel', type: ChannelType.colorWheel),
+          FixtureChannel(offset: 1, name: 'Strobe', type: ChannelType.strobe),
+          FixtureChannel(offset: 2, name: 'Dimmer', type: ChannelType.dimmer),
+          FixtureChannel(offset: 3, name: 'Gobo Wheel', type: ChannelType.gobo),
+          FixtureChannel(offset: 4, name: 'Prism Insertion', type: ChannelType.prism),
+          FixtureChannel(offset: 5, name: 'Prism Rotation', type: ChannelType.rotation),
+          FixtureChannel(offset: 6, name: 'Effects', type: ChannelType.function),
+          FixtureChannel(offset: 7, name: 'Frost', type: ChannelType.frost),
+          FixtureChannel(offset: 8, name: 'Focus', type: ChannelType.focus),
+          FixtureChannel(offset: 9, name: 'Pan', type: ChannelType.pan),
+          FixtureChannel(offset: 10, name: 'Pan Fine', type: ChannelType.panFine),
+          FixtureChannel(offset: 11, name: 'Tilt', type: ChannelType.tilt),
+          FixtureChannel(offset: 12, name: 'Tilt Fine', type: ChannelType.tiltFine),
+          FixtureChannel(offset: 13, name: 'Function', type: ChannelType.function),
+          FixtureChannel(offset: 14, name: 'Reset', type: ChannelType.reset),
+          FixtureChannel(offset: 15, name: 'Lamp Control', type: ChannelType.function),
         ],
       ),
       
-      // LED PAR RGBW
+      // LED Wash 36x10W
+      Fixture(
+        id: 'wash_led_36',
+        name: 'LED Wash 36x10W',
+        manufacturer: 'Generic',
+        channelCount: 10,
+        channels: [
+          FixtureChannel(offset: 0, name: 'Pan', type: ChannelType.pan),
+          FixtureChannel(offset: 1, name: 'Tilt', type: ChannelType.tilt),
+          FixtureChannel(offset: 2, name: 'Dimmer', type: ChannelType.dimmer),
+          FixtureChannel(offset: 3, name: 'Strobe', type: ChannelType.strobe),
+          FixtureChannel(offset: 4, name: 'Red', type: ChannelType.red),
+          FixtureChannel(offset: 5, name: 'Green', type: ChannelType.green),
+          FixtureChannel(offset: 6, name: 'Blue', type: ChannelType.blue),
+          FixtureChannel(offset: 7, name: 'White', type: ChannelType.white),
+          FixtureChannel(offset: 8, name: 'Speed', type: ChannelType.speed),
+          FixtureChannel(offset: 9, name: 'Macro', type: ChannelType.macro),
+        ],
+      ),
+      
+      // LED PAR RGBW (Basit)
       Fixture(
         id: 'led_par_rgbw',
         name: 'LED PAR RGBW',
@@ -184,7 +177,7 @@ class FixtureManager extends ChangeNotifier {
         ],
       ),
       
-      // Moving Head Spot
+      // Moving Head Spot 150W
       Fixture(
         id: 'spot_150w',
         name: 'Spot 150W Moving Head',

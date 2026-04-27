@@ -160,73 +160,67 @@ class _ControlScreenState extends State<ControlScreen> {
             'DMX Address: ${fixture.startAddress}',
             style: const TextStyle(color: Colors.white70),
           ),
-          const Divider(height: 32),
+          const Divider(height: 32, color: Colors.white24),
           
           // Kontrol alanı
           Expanded(
-            child: Row(
+            child: ListView(
               children: [
                 // XY Pad (Pan/Tilt)
                 if (hasMovement) ...[
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Pan / Tilt',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        Expanded(
-                          child: XYPad(
-                            onChanged: (x, y) {
-                              _updatePanTilt(fixture, dmxEngine, x, y);
-                            },
-                          ),
-                        ),
-                      ],
+                  const Text(
+                    'Movement',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF00D9FF),
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    height: 300,
+                    child: XYPad(
+                      onChanged: (x, y) {
+                        _updatePanTilt(fixture, dmxEngine, x, y);
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 24),
                 ],
                 
                 // Color Picker (RGB)
                 if (hasColor) ...[
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Color',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        Expanded(
-                          child: DMXColorPicker(
-                            onColorChanged: (color) {
-                              _updateColor(fixture, dmxEngine, color);
-                            },
-                          ),
-                        ),
-                      ],
+                  const Text(
+                    'Color Mixing',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF00D9FF),
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    height: 250,
+                    child: DMXColorPicker(
+                      onColorChanged: (color) {
+                        _updateColor(fixture, dmxEngine, color);
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 24),
                 ],
                 
-                // Sliders (Dimmer, Zoom, vb.)
-                SizedBox(
-                  width: 300,
-                  child: _buildSliders(fixture, dmxEngine),
+                // Dynamic Sliders
+                const Text(
+                  'Channel Faders',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF00D9FF),
+                  ),
                 ),
+                const SizedBox(height: 12),
+                _buildDynamicSliders(fixture, dmxEngine),
               ],
             ),
           ),
@@ -235,32 +229,63 @@ class _ControlScreenState extends State<ControlScreen> {
     );
   }
   
-  Widget _buildSliders(Fixture fixture, DMXEngine dmxEngine) {
-    final sliderChannels = fixture.channels.where((ch) =>
-        ch.type == ChannelType.dimmer ||
-        ch.type == ChannelType.zoom ||
-        ch.type == ChannelType.focus ||
-        ch.type == ChannelType.strobe).toList();
+  Widget _buildDynamicSliders(Fixture fixture, DMXEngine dmxEngine) {
+    // Pan/Tilt ve RGB dışındaki tüm önemli kanalları slider olarak göster
+    final importantTypes = [
+      ChannelType.dimmer,
+      ChannelType.strobe,
+      ChannelType.focus,
+      ChannelType.zoom,
+      ChannelType.gobo,
+      ChannelType.colorWheel,
+      ChannelType.prism,
+      ChannelType.rotation,
+      ChannelType.goboRotation,
+      ChannelType.prismRotation,
+      ChannelType.frost,
+      ChannelType.iris,
+      ChannelType.shutter,
+      ChannelType.speed,
+      ChannelType.macro,
+    ];
+    
+    final sliderChannels = fixture.channels
+        .where((ch) => importantTypes.contains(ch.type))
+        .toList();
     
     if (sliderChannels.isEmpty) {
-      return const Center(child: Text('No sliders available'));
+      return const Padding(
+        padding: EdgeInsets.all(16),
+        child: Text(
+          'No fader channels available',
+          style: TextStyle(color: Colors.white54),
+        ),
+      );
     }
     
-    return Row(
-      children: sliderChannels.map((channel) {
-        final address = fixture.startAddress! + channel.offset;
-        final currentValue = dmxEngine.getChannel(address) / 255.0;
-        
-        return Expanded(
-          child: DMXSlider(
-            label: channel.name,
-            value: currentValue,
-            onChanged: (value) {
-              dmxEngine.setChannel(address, (value * 255).round());
-            },
-          ),
-        );
-      }).toList(),
+    return SizedBox(
+      height: 300,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: sliderChannels.length,
+        itemBuilder: (context, index) {
+          final channel = sliderChannels[index];
+          final address = fixture.startAddress! + channel.offset;
+          final currentValue = dmxEngine.getChannel(address) / 255.0;
+          
+          return Container(
+            width: 80,
+            margin: const EdgeInsets.only(right: 12),
+            child: DMXSlider(
+              label: channel.name,
+              value: currentValue,
+              onChanged: (value) {
+                dmxEngine.setChannel(address, (value * 255).round());
+              },
+            ),
+          );
+        },
+      ),
     );
   }
   
