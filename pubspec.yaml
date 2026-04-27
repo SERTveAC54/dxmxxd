@@ -20,6 +20,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   
-  # Cihaz kütüphanesini uygulamaya gömüyoruz
+  # Pixilab JSON kütüphanesini uygulamaya gömüyoruz
   assets:
-    - assets/
+    - assets/fixtures/
