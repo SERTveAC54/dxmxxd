@@ -270,75 +270,358 @@ class _PatchScreenState extends State<PatchScreen> {
   }
   
   void _showPatchDialog(BuildContext context, Fixture fixture) {
-    final controller = TextEditingController(text: '1');
+    final fixtureManager = context.read<FixtureManager>();
+    final nextFreeAddress = _findNextFreeAddress(fixtureManager, fixture.channelCount);
+    final controller = TextEditingController(text: nextFreeAddress.toString());
     
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
+      builder: (context) => Dialog(
         backgroundColor: const Color(0xFF1A1F3A),
-        title: Text('Patch ${fixture.name}'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Manufacturer: ${fixture.manufacturer}'),
-            Text('Channels: ${fixture.channelCount}'),
-            const SizedBox(height: 16),
-            TextField(
-              controller: controller,
-              keyboardType: TextInputType.number,
-              style: const TextStyle(color: Colors.white),
-              decoration: const InputDecoration(
-                labelText: 'Start Address (1-512)',
-                labelStyle: TextStyle(color: Colors.white70),
-                border: OutlineInputBorder(),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white24),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFF00D9FF)),
+        child: Container(
+          width: 700,
+          height: 600,
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Başlık
+              Row(
+                children: [
+                  const Icon(Icons.lightbulb, color: Color(0xFF00D9FF), size: 28),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          fixture.name,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Text(
+                          '${fixture.manufacturer} • ${fixture.channelCount} channels',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.white54,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close, color: Colors.white54),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
+              const Divider(color: Colors.white12, height: 30),
+              
+              // DMX Kanal Tablosu
+              const Text(
+                'DMX CHANNEL MAP (1-512)',
+                style: TextStyle(
+                  color: Color(0xFF00D9FF),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  letterSpacing: 1.2,
                 ),
               ),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF00D9FF),
-              foregroundColor: Colors.black,
-            ),
-            onPressed: () {
-              final address = int.tryParse(controller.text);
-              if (address != null && address >= 1 && address <= 512) {
-                try {
-                  context.read<FixtureManager>().patchFixture(fixture, address);
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('${fixture.name} patched to Ch $address'),
+              const SizedBox(height: 12),
+              
+              Expanded(
+                child: _buildChannelMap(fixtureManager, fixture.channelCount, controller),
+              ),
+              
+              const SizedBox(height: 16),
+              
+              // Adres girişi ve patch butonu
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: controller,
+                      keyboardType: TextInputType.number,
+                      style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                      decoration: InputDecoration(
+                        labelText: 'Start Address',
+                        labelStyle: const TextStyle(color: Colors.white70),
+                        hintText: 'Enter 1-512',
+                        hintStyle: const TextStyle(color: Colors.white24),
+                        prefixIcon: const Icon(Icons.pin_drop, color: Color(0xFF00D9FF)),
+                        suffixIcon: IconButton(
+                          icon: const Icon(Icons.auto_fix_high, color: Color(0xFFFF6B35)),
+                          tooltip: 'Auto-find next free address',
+                          onPressed: () {
+                            controller.text = _findNextFreeAddress(fixtureManager, fixture.channelCount).toString();
+                          },
+                        ),
+                        filled: true,
+                        fillColor: const Color(0xFF0A0E27),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide.none,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: Colors.white24),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: Color(0xFF00D9FF), width: 2),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF00D9FF),
+                      foregroundColor: Colors.black,
+                      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
-                  );
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(e.toString()),
-                      backgroundColor: Colors.red,
+                    icon: const Icon(Icons.add_circle),
+                    label: const Text('PATCH', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    onPressed: () {
+                      final address = int.tryParse(controller.text);
+                      if (address != null && address >= 1 && address <= 512) {
+                        try {
+                          fixtureManager.patchFixture(fixture, address);
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('✓ ${fixture.name} patched to Ch $address-${address + fixture.channelCount - 1}'),
+                              backgroundColor: const Color(0xFF00D9FF),
+                            ),
+                          );
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(e.toString()),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        }
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+  
+  // Boş adres bulma fonksiyonu
+  int _findNextFreeAddress(FixtureManager manager, int channelCount) {
+    if (manager.patchedFixtures.isEmpty) return 1;
+    
+    // Tüm kullanılan adresleri işaretle
+    final usedChannels = List<bool>.filled(512, false);
+    for (var fixture in manager.patchedFixtures) {
+      if (fixture.startAddress != null) {
+        for (int i = 0; i < fixture.channelCount; i++) {
+          final ch = fixture.startAddress! + i - 1;
+          if (ch >= 0 && ch < 512) {
+            usedChannels[ch] = true;
+          }
+        }
+      }
+    }
+    
+    // İlk boş aralığı bul
+    for (int start = 0; start <= 512 - channelCount; start++) {
+      bool canFit = true;
+      for (int i = 0; i < channelCount; i++) {
+        if (usedChannels[start + i]) {
+          canFit = false;
+          break;
+        }
+      }
+      if (canFit) return start + 1; // DMX 1-indexed
+    }
+    
+    return 1; // Fallback
+  }
+  
+  // DMX Kanal haritası widget'ı
+  Widget _buildChannelMap(FixtureManager manager, int fixtureChannelCount, TextEditingController controller) {
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFF0A0E27),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.white12),
+      ),
+      child: Column(
+        children: [
+          // Tablo başlığı
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+            decoration: const BoxDecoration(
+              color: Color(0xFF10141D),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(12),
+                topRight: Radius.circular(12),
+              ),
+            ),
+            child: Row(
+              children: [
+                const Expanded(
+                  flex: 2,
+                  child: Text('CHANNEL', style: TextStyle(color: Colors.white54, fontSize: 11, fontWeight: FontWeight.bold)),
+                ),
+                const Expanded(
+                  flex: 3,
+                  child: Text('FIXTURE', style: TextStyle(color: Colors.white54, fontSize: 11, fontWeight: FontWeight.bold)),
+                ),
+                const Expanded(
+                  flex: 2,
+                  child: Text('MANUFACTURER', style: TextStyle(color: Colors.white54, fontSize: 11, fontWeight: FontWeight.bold)),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Container(),
+                ),
+              ],
+            ),
+          ),
+          
+          // Kanal listesi
+          Expanded(
+            child: ListView.builder(
+              itemCount: 512,
+              itemBuilder: (context, index) {
+                final channel = index + 1;
+                final occupyingFixture = _getFixtureAtChannel(manager, channel);
+                final isOccupied = occupyingFixture != null;
+                final isFree = !isOccupied;
+                
+                // Seçili adres aralığını hesapla
+                final selectedAddress = int.tryParse(controller.text) ?? 0;
+                final isInSelectedRange = selectedAddress > 0 && 
+                    channel >= selectedAddress && 
+                    channel < selectedAddress + fixtureChannelCount;
+                
+                return InkWell(
+                  onTap: isFree ? () {
+                    controller.text = channel.toString();
+                  } : null,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                    decoration: BoxDecoration(
+                      color: isInSelectedRange 
+                          ? const Color(0xFF00D9FF).withOpacity(0.2)
+                          : (isOccupied 
+                              ? Colors.red.withOpacity(0.1) 
+                              : Colors.transparent),
+                      border: Border(
+                        bottom: BorderSide(color: Colors.white.withOpacity(0.05)),
+                      ),
                     ),
-                  );
-                }
-              }
-            },
-            child: const Text('Patch'),
+                    child: Row(
+                      children: [
+                        // Kanal numarası
+                        Expanded(
+                          flex: 2,
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 8,
+                                height: 8,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: isInSelectedRange 
+                                      ? const Color(0xFF00D9FF)
+                                      : (isOccupied ? Colors.red : Colors.green),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                channel.toString().padLeft(3, '0'),
+                                style: TextStyle(
+                                  color: isInSelectedRange 
+                                      ? const Color(0xFF00D9FF)
+                                      : (isOccupied ? Colors.red.shade300 : Colors.green.shade300),
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'monospace',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        
+                        // Fixture adı
+                        Expanded(
+                          flex: 3,
+                          child: Text(
+                            isOccupied ? occupyingFixture.name : '—',
+                            style: TextStyle(
+                              color: isOccupied ? Colors.white : Colors.white24,
+                              fontSize: 12,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        
+                        // Manufacturer
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            isOccupied ? occupyingFixture.manufacturer : 'FREE',
+                            style: TextStyle(
+                              color: isOccupied ? Colors.white54 : Colors.green.shade300,
+                              fontSize: 11,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        
+                        // Aksiyon
+                        Expanded(
+                          flex: 1,
+                          child: isFree
+                              ? IconButton(
+                                  icon: const Icon(Icons.add_circle_outline, size: 18),
+                                  color: const Color(0xFF00D9FF),
+                                  onPressed: () {
+                                    controller.text = channel.toString();
+                                  },
+                                  tooltip: 'Use this address',
+                                )
+                              : const SizedBox.shrink(),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),
     );
+  }
+  
+  // Belirli bir kanalda fixture var mı kontrol et
+  Fixture? _getFixtureAtChannel(FixtureManager manager, int channel) {
+    for (var fixture in manager.patchedFixtures) {
+      if (fixture.startAddress != null) {
+        final start = fixture.startAddress!;
+        final end = start + fixture.channelCount - 1;
+        if (channel >= start && channel <= end) {
+          return fixture;
+        }
+      }
+    }
+    return null;
   }
 }
 

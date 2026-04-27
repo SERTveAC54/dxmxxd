@@ -23,6 +23,7 @@ flutter:
   # Fixture kütüphanesi - Tüm marka klasörleri
   assets:
     - assets/fixtures/
+    - assets/fixtures/library_full.json
     - assets/fixtures/5Star Systems/
     - assets/fixtures/Abstract/
     - assets/fixtures/Acme/

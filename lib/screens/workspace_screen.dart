@@ -5,7 +5,6 @@ import '../services/dmx_engine.dart';
 import '../models/fixture.dart';
 import '../widgets/xy_pad.dart';
 import '../widgets/dmx_slider.dart';
-import '../widgets/color_picker.dart';
 
 class WorkspaceScreen extends StatefulWidget {
   const WorkspaceScreen({super.key});
@@ -16,9 +15,9 @@ class WorkspaceScreen extends StatefulWidget {
 
 class _WorkspaceScreenState extends State<WorkspaceScreen> {
   final Set<String> _selectedFixtureIds = {};
-  String _activeFilter = 'All';
+  String _activeGroupName = "Tüm Robotlar"; // Marka yerine grup ismi
 
-  // Seçili tüm cihazların aynı kanal tipini (Örn: Pan) aynı anda güncelleyen motor
+  // Seçili gruba veya tümüne göre toplu kanal güncelleme
   void _updateGroupChannel(FixtureManager manager, DMXEngine dmx, ChannelType type, int value) {
     for (var id in _selectedFixtureIds) {
       final fix = manager.patchedFixtures.firstWhere((f) => f.id == id);
@@ -33,60 +32,98 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
   Widget build(BuildContext context) {
     final fixtureManager = context.watch<FixtureManager>();
     final dmxEngine = context.watch<DMXEngine>();
-    
-    final filteredFixtures = _activeFilter == 'All' 
-        ? fixtureManager.patchedFixtures 
-        : fixtureManager.patchedFixtures.where((f) => f.manufacturer == _activeFilter).toList();
 
     return Scaffold(
       backgroundColor: const Color(0xFF05070A),
-      appBar: _buildAppBar(),
       body: Column(
         children: [
-          // 1. ÜST KISIM: GRID VE MASTER SIDER
+          // 1. ÜST BÖLÜM: ANA ÇALIŞMA ALANI (CIHAZ KUTUCUKLARI)
           Expanded(
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      _buildGroupBar(fixtureManager),
-                      Expanded(
-                        child: GridView.builder(
-                          padding: const EdgeInsets.all(20),
-                          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 140,
-                            crossAxisSpacing: 15,
-                            mainAxisSpacing: 15,
-                            childAspectRatio: 0.9,
-                          ),
-                          itemCount: filteredFixtures.length,
-                          itemBuilder: (context, index) {
-                            return _buildFixtureCell(filteredFixtures[index], dmxEngine);
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                if (_selectedFixtureIds.isNotEmpty) _buildSideMaster(dmxEngine, fixtureManager),
-              ],
+            flex: 3,
+            child: GridView.builder(
+              padding: const EdgeInsets.all(20),
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 130,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 12,
+                childAspectRatio: 1,
+              ),
+              itemCount: fixtureManager.patchedFixtures.length,
+              itemBuilder: (context, index) {
+                final fixture = fixtureManager.patchedFixtures[index];
+                final isSelected = _selectedFixtureIds.contains(fixture.id);
+                return _buildFixtureCell(fixture, isSelected, dmxEngine);
+              },
+            ),
+          ),
+
+          // 2. ORTA BÖLÜM: GENİŞ SLIDER VE GÖREV ALANI (ATTRIBUTES)
+          if (_selectedFixtureIds.isNotEmpty)
+            Expanded(
+              flex: 2,
+              child: Container(
+                color: const Color(0xFF0F121A),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: _buildLargeControlPanel(fixtureManager, dmxEngine),
+              ),
+            ),
+
+          // 3. ALT BÖLÜM: BİLGİ VE GRUP BARI (BAR)
+          _buildInfoBar(fixtureManager),
+        ],
+      ),
+    );
+  }
+
+  // İSTEDİĞİN ÖZEL BAR YAPISI
+  Widget _buildInfoBar(FixtureManager manager) {
+    return Container(
+      height: 55,
+      decoration: const BoxDecoration(
+        color: Color(0xFF1A1F3A),
+        border: Border(top: BorderSide(color: Colors.white12)),
+      ),
+      child: Row(
+        children: [
+          // EN SOLDA DEĞİŞTİRİLEBİLİR GRUP KUTUCUĞU
+          GestureDetector(
+            onTap: () {
+              // Burada grup seçimi veya isim verme diyaloğu açılabilir
+            },
+            child: Container(
+              width: 120,
+              color: const Color(0xFF00D9FF).withOpacity(0.2),
+              alignment: Alignment.center,
+              child: Text(
+                _activeGroupName.toUpperCase(),
+                style: const TextStyle(color: Color(0xFF00D9FF), fontWeight: FontWeight.bold, fontSize: 11),
+              ),
             ),
           ),
           
-          // 2. ALT KISIM: KONTROL PANELİ (Sadece seçim yapılınca alttan çıkar)
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            height: _selectedFixtureIds.isNotEmpty ? 220 : 0,
-            decoration: const BoxDecoration(
-              color: Color(0xFF10141D),
-              border: Border(top: BorderSide(color: Colors.white12, width: 2)),
-            ),
-            child: SingleChildScrollView(
-              physics: const NeverScrollableScrollPhysics(),
-              child: _selectedFixtureIds.isNotEmpty 
-                  ? _buildBottomControlPanel(fixtureManager, dmxEngine) 
-                  : const SizedBox.shrink(),
+          // İNCE ÇİZGİ
+          Container(width: 1, color: Colors.white24, margin: const EdgeInsets.symmetric(vertical: 10)),
+
+          // SEÇİLMİŞ ROBOTLARIN ÖZETİ
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: _selectedFixtureIds.isEmpty 
+                ? const Text("LÜTFEN ROBOT SEÇİN", style: TextStyle(color: Colors.white24, fontSize: 10))
+                : ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: _selectedFixtureIds.map((id) {
+                      final name = manager.patchedFixtures.firstWhere((f) => f.id == id).name;
+                      return Center(
+                        child: Container(
+                          margin: const EdgeInsets.only(right: 8),
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(color: Colors.white10, borderRadius: BorderRadius.circular(4)),
+                          child: Text(name, style: const TextStyle(color: Colors.white70, fontSize: 10)),
+                        ),
+                      );
+                    }).toList(),
+                  ),
             ),
           ),
         ],
@@ -94,140 +131,54 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
     );
   }
 
-  // --- ALT KONTROL PANELİ (XY PAD VE SLIDERLAR) ---
-  Widget _buildBottomControlPanel(FixtureManager manager, DMXEngine dmx) {
-    // Arayüzü çizmek için seçili ilk cihazı referans alıyoruz
+  // DAHA BÜYÜK VE GENİŞ KONTROL PANELİ
+  Widget _buildLargeControlPanel(FixtureManager manager, DMXEngine dmx) {
     final refFixture = manager.patchedFixtures.firstWhere((f) => f.id == _selectedFixtureIds.first);
     
-    final hasPan = refFixture.channels.any((c) => c.type == ChannelType.pan);
-    final hasRgb = refFixture.channels.any((c) => c.type == ChannelType.red);
-
-    // Pan, Tilt ve RGB dışındaki tüm kanalları Slider olarak listele
+    // Pan/Tilt ve RGB dışındaki kanallar
     final sliderChannels = refFixture.channels.where((c) => 
        c.type != ChannelType.pan && c.type != ChannelType.tilt && 
-       c.type != ChannelType.panFine && c.type != ChannelType.tiltFine && 
        c.type != ChannelType.red && c.type != ChannelType.green && c.type != ChannelType.blue
     ).toList();
 
-    return Container(
-      height: 220,
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        children: [
-          // XY PAD (Moving Head'ler için)
-          if (hasPan) ...[
-            SizedBox(
-              width: 200,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('PAN / TILT', style: TextStyle(color: Color(0xFF00D9FF), fontWeight: FontWeight.bold, fontSize: 12)),
-                  const SizedBox(height: 10),
-                  Expanded(
-                    child: XYPad(
-                      onChanged: (x, y) {
-                        _updateGroupChannel(manager, dmx, ChannelType.pan, (x * 255).round());
-                        _updateGroupChannel(manager, dmx, ChannelType.tilt, (y * 255).round());
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: VerticalDivider(color: Colors.white12, width: 1),
-            ),
-          ],
-
-          // SLIDER BÖLÜMÜ (Gobo, Prism, Color Wheel, Frost vb.)
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('ATTRIBUTES', style: TextStyle(color: Color(0xFF00D9FF), fontWeight: FontWeight.bold, fontSize: 12)),
-                const SizedBox(height: 10),
-                Expanded(
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: sliderChannels.length,
-                    itemBuilder: (context, index) {
-                      final ch = sliderChannels[index];
-                      final currentVal = dmx.getChannel(refFixture.startAddress! + ch.offset) / 255.0;
-                      
-                      return SizedBox(
-                        width: 80,
-                        child: DMXSlider(
-                          label: ch.name,
-                          value: currentVal,
-                          onChanged: (val) {
-                            _updateGroupChannel(manager, dmx, ch.type, (val * 255).round());
-                          },
-                        ),
-                      );
-                    },
-                  ),
+    return Row(
+      children: [
+        // DAHA BÜYÜK XY PAD
+        SizedBox(
+          width: 220,
+          child: XYPad(
+            onChanged: (x, y) {
+              _updateGroupChannel(manager, dmx, ChannelType.pan, (x * 255).round());
+              _updateGroupChannel(manager, dmx, ChannelType.tilt, (y * 255).round());
+            },
+          ),
+        ),
+        const VerticalDivider(color: Colors.white10, indent: 10, endIndent: 10),
+        
+        // DAHA GENİŞ SLIDERLAR
+        Expanded(
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: sliderChannels.length,
+            itemBuilder: (context, index) {
+              final ch = sliderChannels[index];
+              return Container(
+                width: 100, // Slider genişliğini artırdım
+                margin: const EdgeInsets.symmetric(horizontal: 4),
+                child: DMXSlider(
+                  label: ch.name.toUpperCase(),
+                  value: dmx.getChannel(refFixture.startAddress! + ch.offset) / 255.0,
+                  onChanged: (val) => _updateGroupChannel(manager, dmx, ch.type, (val * 255).round()),
                 ),
-              ],
-            ),
+              );
+            },
           ),
-        ],
-      ),
-    );
-  }
-
-  // --- DİĞER UI BİLEŞENLERİ ---
-
-  AppBar _buildAppBar() {
-    return AppBar(
-      backgroundColor: const Color(0xFF10141D),
-      elevation: 0,
-      title: const Text('WORKSPACE', style: TextStyle(letterSpacing: 1.2, fontSize: 16, fontWeight: FontWeight.w900)),
-      actions: [
-        if (_selectedFixtureIds.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: Center(
-              child: Text(
-                '${_selectedFixtureIds.length} SELECTED',
-                style: const TextStyle(color: Color(0xFFFF6B35), fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-        TextButton(
-          onPressed: () => setState(() => _selectedFixtureIds.clear()),
-          child: const Text('CLEAR', style: TextStyle(color: Colors.white54)),
         ),
       ],
     );
   }
 
-  Widget _buildGroupBar(FixtureManager manager) {
-    final manufacturers = ['All', ...manager.patchedFixtures.map((f) => f.manufacturer).toSet()];
-    return Container(
-      height: 60,
-      color: const Color(0xFF10141D),
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        children: manufacturers.map((m) => Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ChoiceChip(
-            label: Text(m),
-            selected: _activeFilter == m,
-            onSelected: (val) => setState(() => _activeFilter = m),
-            selectedColor: const Color(0xFF00D9FF),
-            backgroundColor: const Color(0xFF1C222D),
-          ),
-        )).toList(),
-      ),
-    );
-  }
-
-  Widget _buildFixtureCell(Fixture fixture, DMXEngine dmx) {
-    final bool isSelected = _selectedFixtureIds.contains(fixture.id);
-    final double intensity = _getFixtureIntensity(fixture, dmx);
-
+  Widget _buildFixtureCell(Fixture fixture, bool isSelected, DMXEngine dmx) {
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -236,93 +187,22 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
         });
       },
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 100),
+        duration: const Duration(milliseconds: 150),
         decoration: BoxDecoration(
-          color: const Color(0xFF1C222D),
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(
-            color: isSelected ? const Color(0xFF00D9FF) : Colors.transparent,
-            width: 2,
-          ),
-          boxShadow: [
-            if (isSelected)
-              BoxShadow(
-                color: const Color(0xFF00D9FF).withOpacity(0.3),
-                blurRadius: 15,
-                spreadRadius: 2,
-              )
-          ],
+          color: isSelected ? const Color(0xFF1A1F3A) : const Color(0xFF11141D),
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: isSelected ? const Color(0xFF00D9FF) : Colors.white10, width: isSelected ? 2 : 1),
         ),
-        child: Stack(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 150),
-                height: 100 * intensity, 
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.white.withOpacity(0.4), Colors.white.withOpacity(0.05)],
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(fixture.name, maxLines: 2, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
-                  const Spacer(),
-                  Text('CH: ${fixture.startAddress}', style: const TextStyle(fontSize: 10, color: Colors.white54)),
-                ],
-              ),
-            ),
+            Icon(Icons.lightbulb, color: isSelected ? const Color(0xFF00D9FF) : Colors.white24, size: 24),
+            const SizedBox(height: 5),
+            Text(fixture.name, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
+            Text("CH: ${fixture.startAddress}", style: const TextStyle(fontSize: 9, color: Colors.white38)),
           ],
         ),
       ),
     );
-  }
-
-  Widget _buildSideMaster(DMXEngine dmx, FixtureManager manager) {
-    // Seçili cihazların ortak Dimmer kanal değerini göster/ayarla
-    final refFixture = manager.patchedFixtures.firstWhere((f) => f.id == _selectedFixtureIds.first);
-    final dimCh = refFixture.channels.where((c) => c.type == ChannelType.dimmer).firstOrNull;
-    final currentDim = dimCh != null ? dmx.getChannel(refFixture.startAddress! + dimCh.offset) / 255.0 : 0.0;
-
-    return Container(
-      width: 80,
-      color: const Color(0xFF10141D),
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: Column(
-        children: [
-          const Text('DIM', style: TextStyle(fontSize: 12, color: Color(0xFF00D9FF), fontWeight: FontWeight.bold)),
-          const SizedBox(height: 20),
-          Expanded(
-            child: RotatedBox(
-              quarterTurns: 3,
-              child: Slider(
-                value: currentDim, 
-                onChanged: (val) {
-                  _updateGroupChannel(manager, dmx, ChannelType.dimmer, (val * 255).round());
-                }
-              ),
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text('${(currentDim * 100).round()}%', style: const TextStyle(fontWeight: FontWeight.bold)),
-        ],
-      ),
-    );
-  }
-
-  double _getFixtureIntensity(Fixture f, DMXEngine dmx) {
-    final dimCh = f.channels.where((c) => c.type == ChannelType.dimmer).firstOrNull;
-    if (dimCh == null) return 0.1;
-    return (dmx.getChannel(f.startAddress! + dimCh.offset) / 255.0).clamp(0.1, 1.0);
   }
 }
