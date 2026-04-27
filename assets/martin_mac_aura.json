@@ -1,0 +1,98 @@
+{
+  "id": "martin_mac_aura",
+  "name": "Martin MAC Aura",
+  "manufacturer": "Martin",
+  "channelCount": 18,
+  "channels": [
+    {
+      "offset": 0,
+      "name": "Dimmer",
+      "type": "dimmer"
+    },
+    {
+      "offset": 1,
+      "name": "Dimmer Fine",
+      "type": "dimmer"
+    },
+    {
+      "offset": 2,
+      "name": "Red",
+      "type": "red"
+    },
+    {
+      "offset": 3,
+      "name": "Red Fine",
+      "type": "red"
+    },
+    {
+      "offset": 4,
+      "name": "Green",
+      "type": "green"
+    },
+    {
+      "offset": 5,
+      "name": "Green Fine",
+      "type": "green"
+    },
+    {
+      "offset": 6,
+      "name": "Blue",
+      "type": "blue"
+    },
+    {
+      "offset": 7,
+      "name": "Blue Fine",
+      "type": "blue"
+    },
+    {
+      "offset": 8,
+      "name": "White",
+      "type": "white"
+    },
+    {
+      "offset": 9,
+      "name": "White Fine",
+      "type": "white"
+    },
+    {
+      "offset": 10,
+      "name": "Strobe",
+      "type": "strobe"
+    },
+    {
+      "offset": 11,
+      "name": "Zoom",
+      "type": "zoom"
+    },
+    {
+      "offset": 12,
+      "name": "Pan",
+      "type": "pan"
+    },
+    {
+      "offset": 13,
+      "name": "Pan Fine",
+      "type": "panFine"
+    },
+    {
+      "offset": 14,
+      "name": "Tilt",
+      "type": "tilt"
+    },
+    {
+      "offset": 15,
+      "name": "Tilt Fine",
+      "type": "tiltFine"
+    },
+    {
+      "offset": 16,
+      "name": "Color Macro",
+      "type": "macro"
+    },
+    {
+      "offset": 17,
+      "name": "Reset",
+      "type": "reset"
+    }
+  ]
+}

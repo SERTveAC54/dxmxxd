@@ -9,23 +9,97 @@ class FixtureManager extends ChangeNotifier {
   final List<Fixture> _fixtureLibrary = [];
   final List<Fixture> _patchedFixtures = [];
   
-  List<Fixture> get fixtureLibrary => List.unmodifiable(_fixtureLibrary);
-  List<Fixture> get patchedFixtures => List.unmodifiable(_patchedFixtures);
+  List<Fixture> get fixtureLibrary => _fixtureLibrary;
+  List<Fixture> get patchedFixtures => _patchedFixtures;
   
   FixtureManager() {
-    _loadFixtureLibrary();
+    // Uygulama açılır açılmaz gömülü kütüphaneyi RAM'e al!
+    _loadBuiltInLibrary();
     _loadPatchedFixtures();
   }
   
-  /// Fikstür kütüphanesini yükle - Profesyonel cihazlar
-  Future<void> _loadFixtureLibrary() async {
+  /// Gömülü JSON kütüphanesini yükle (basit format)
+  Future<void> _loadBuiltInLibrary() async {
     try {
-      // Profesyonel fikstürleri yükle
+      debugPrint('📦 Kütüphane yükleniyor...');
+      
+      // 1. Assets içindeki json dosyasını oku
+      final String jsonString = await rootBundle.loadString('assets/library.json');
+      
+      // 2. JSON'u Listeye çevir
+      final List<dynamic> devices = jsonDecode(jsonString);
+      
+      // 3. Her bir cihazı kendi Fixture modelimize dönüştür
+      for (int i = 0; i < devices.length; i++) {
+        final device = devices[i];
+        final String name = device['name'] ?? 'Bilinmeyen Cihaz';
+        final List<dynamic> channelNames = device['channels'] ?? [];
+        
+        List<FixtureChannel> parsedChannels = [];
+        for (int c = 0; c < channelNames.length; c++) {
+          final chName = channelNames[c].toString();
+          parsedChannels.add(
+            FixtureChannel(
+              name: chName,
+              offset: c,
+              type: _guessChannelType(chName),
+            ),
+          );
+        }
+        
+        _fixtureLibrary.add(
+          Fixture(
+            id: 'builtin_$i',
+            name: name,
+            manufacturer: 'Generic',
+            channelCount: parsedChannels.length,
+            channels: parsedChannels,
+          ),
+        );
+      }
+      
+      // 4. Arayüzü güncelle
+      notifyListeners();
+      debugPrint("✅ Kütüphane Yüklendi: ${_fixtureLibrary.length} cihaz hazır.");
+      
+    } catch (e) {
+      debugPrint("❌ Gömülü kütüphane yüklenemedi: $e");
+      // Fallback: Varsayılan cihazları yükle
       _fixtureLibrary.addAll(_getDefaultFixtures());
       notifyListeners();
-    } catch (e) {
-      debugPrint('Fikstür kütüphanesi yükleme hatası: $e');
     }
+  }
+  
+  /// Akıllı Kanal Tipi Algılayıcı (Gelen isme göre Pan, Tilt, Color ayırır)
+  ChannelType _guessChannelType(String name) {
+    final lower = name.toLowerCase();
+    
+    if (lower.contains('pan fine')) return ChannelType.panFine;
+    if (lower.contains('tilt fine')) return ChannelType.tiltFine;
+    if (lower.contains('pan')) return ChannelType.pan;
+    if (lower.contains('tilt')) return ChannelType.tilt;
+    if (lower.contains('dimmer') || lower.contains('intensity')) return ChannelType.dimmer;
+    if (lower.contains('strobe') || lower.contains('shutter')) return ChannelType.strobe;
+    if (lower.contains('red')) return ChannelType.red;
+    if (lower.contains('green')) return ChannelType.green;
+    if (lower.contains('blue')) return ChannelType.blue;
+    if (lower.contains('white')) return ChannelType.white;
+    if (lower.contains('amber')) return ChannelType.amber;
+    if (lower.contains('uv')) return ChannelType.uv;
+    if (lower.contains('color') || lower.contains('colour')) return ChannelType.colorWheel;
+    if (lower.contains('gobo rotation')) return ChannelType.goboRotation;
+    if (lower.contains('gobo')) return ChannelType.gobo;
+    if (lower.contains('prism rotation')) return ChannelType.prismRotation;
+    if (lower.contains('prism')) return ChannelType.prism;
+    if (lower.contains('focus')) return ChannelType.focus;
+    if (lower.contains('zoom')) return ChannelType.zoom;
+    if (lower.contains('iris')) return ChannelType.iris;
+    if (lower.contains('frost')) return ChannelType.frost;
+    if (lower.contains('speed')) return ChannelType.speed;
+    if (lower.contains('macro')) return ChannelType.macro;
+    if (lower.contains('reset')) return ChannelType.reset;
+    
+    return ChannelType.function;
   }
   
   /// Yamalanmış fikstürleri yükle
@@ -91,6 +165,20 @@ class FixtureManager extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     final json = jsonEncode(_patchedFixtures.map((f) => f.toJson()).toList());
     await prefs.setString('patched_fixtures', json);
+  }
+  
+  /// Dışarıdan özel dosya eklemek istersen kullanılacak fonksiyon
+  void addCustomFixture(Fixture customFixture) {
+    _fixtureLibrary.add(customFixture);
+    notifyListeners();
+    debugPrint('✅ Özel fikstür eklendi: ${customFixture.name}');
+  }
+  
+  /// Kütüphaneden fikstür sil
+  void removeFixtureFromLibrary(String fixtureId) {
+    _fixtureLibrary.removeWhere((f) => f.id == fixtureId);
+    notifyListeners();
+    debugPrint('🗑️ Fikstür silindi: $fixtureId');
   }
   
   /// Varsayılan fikstür örnekleri (Sektör standartları)

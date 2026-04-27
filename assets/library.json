@@ -1,0 +1,194 @@
+[
+  {
+    "name": "Sharpy 7R",
+    "channels": [
+      "Color Wheel",
+      "Strobe",
+      "Dimmer",
+      "Gobo",
+      "Prism",
+      "Prism Rotation",
+      "Effects",
+      "Frost",
+      "Focus",
+      "Pan",
+      "Pan Fine",
+      "Tilt",
+      "Tilt Fine",
+      "Function",
+      "Reset",
+      "Lamp Control"
+    ]
+  },
+  {
+    "name": "Generic RGBW Wash",
+    "channels": [
+      "Dimmer",
+      "Red",
+      "Green",
+      "Blue",
+      "White",
+      "Strobe",
+      "Macro"
+    ]
+  },
+  {
+    "name": "Clay Paky Sharpy",
+    "channels": [
+      "Color Wheel",
+      "Strobe",
+      "Dimmer",
+      "Gobo Wheel",
+      "Prism Insertion",
+      "Prism Rotation",
+      "Effects",
+      "Frost",
+      "Focus",
+      "Pan",
+      "Pan Fine",
+      "Tilt",
+      "Tilt Fine",
+      "Function",
+      "Reset",
+      "Lamp Control"
+    ]
+  },
+  {
+    "name": "Martin MAC Aura",
+    "channels": [
+      "Dimmer",
+      "Dimmer Fine",
+      "Red",
+      "Red Fine",
+      "Green",
+      "Green Fine",
+      "Blue",
+      "Blue Fine",
+      "White",
+      "White Fine",
+      "Strobe",
+      "Zoom",
+      "Pan",
+      "Pan Fine",
+      "Tilt",
+      "Tilt Fine",
+      "Color Macro",
+      "Reset"
+    ]
+  },
+  {
+    "name": "Robe Robin 600 LEDWash",
+    "channels": [
+      "Pan",
+      "Pan Fine",
+      "Tilt",
+      "Tilt Fine",
+      "Pan/Tilt Speed",
+      "Power/Special Functions",
+      "Virtual Color Wheel",
+      "Red",
+      "Red Fine",
+      "Green",
+      "Green Fine",
+      "Blue",
+      "Blue Fine",
+      "White",
+      "White Fine",
+      "CTC",
+      "Zoom",
+      "Shutter/Strobe",
+      "Dimmer",
+      "Dimmer Fine"
+    ]
+  },
+  {
+    "name": "Chauvet Rogue R2 Spot",
+    "channels": [
+      "Pan",
+      "Pan Fine",
+      "Tilt",
+      "Tilt Fine",
+      "Pan/Tilt Speed",
+      "Dimmer",
+      "Shutter",
+      "Color Wheel",
+      "Gobo Wheel 1",
+      "Gobo Wheel 1 Rotation",
+      "Gobo Wheel 2",
+      "Prism",
+      "Prism Rotation",
+      "Focus",
+      "Zoom",
+      "Frost",
+      "Control"
+    ]
+  },
+  {
+    "name": "ADJ Vizi Beam 5RX",
+    "channels": [
+      "Pan",
+      "Tilt",
+      "Color Wheel",
+      "Gobo Wheel",
+      "Prism",
+      "Gobo Rotation",
+      "Focus",
+      "Dimmer",
+      "Shutter/Strobe",
+      "Pan Fine",
+      "Tilt Fine",
+      "Frost",
+      "Pan/Tilt Speed",
+      "Special Functions"
+    ]
+  },
+  {
+    "name": "Generic LED PAR 64 RGBW",
+    "channels": [
+      "Red",
+      "Green",
+      "Blue",
+      "White",
+      "Dimmer",
+      "Strobe",
+      "Color Macro",
+      "Program Speed"
+    ]
+  },
+  {
+    "name": "Elation Platinum Spot 5R",
+    "channels": [
+      "Pan",
+      "Pan Fine",
+      "Tilt",
+      "Tilt Fine",
+      "Color Wheel",
+      "Gobo Wheel 1",
+      "Gobo Rotation",
+      "Gobo Wheel 2",
+      "Prism",
+      "Prism Rotation",
+      "Focus",
+      "Iris",
+      "Shutter/Strobe",
+      "Dimmer",
+      "Frost",
+      "Control"
+    ]
+  },
+  {
+    "name": "LED Wash 36x10W",
+    "channels": [
+      "Pan",
+      "Tilt",
+      "Dimmer",
+      "Strobe",
+      "Red",
+      "Green",
+      "Blue",
+      "White",
+      "Speed",
+      "Macro"
+    ]
+  }
+]

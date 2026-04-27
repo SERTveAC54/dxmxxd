@@ -1,0 +1,605 @@
+{
+  "fixtures": [
+    {
+      "id": "clay_paky_sharpy",
+      "name": "Clay Paky Sharpy",
+      "manufacturer": "Clay Paky",
+      "channelCount": 16,
+      "channels": [
+        {
+          "offset": 0,
+          "name": "Color Wheel",
+          "type": "colorWheel"
+        },
+        {
+          "offset": 1,
+          "name": "Strobe",
+          "type": "strobe"
+        },
+        {
+          "offset": 2,
+          "name": "Dimmer",
+          "type": "dimmer"
+        },
+        {
+          "offset": 3,
+          "name": "Gobo Wheel",
+          "type": "gobo"
+        },
+        {
+          "offset": 4,
+          "name": "Prism",
+          "type": "prism"
+        },
+        {
+          "offset": 5,
+          "name": "Prism Rotation",
+          "type": "prismRotation"
+        },
+        {
+          "offset": 6,
+          "name": "Effects",
+          "type": "function"
+        },
+        {
+          "offset": 7,
+          "name": "Frost",
+          "type": "frost"
+        },
+        {
+          "offset": 8,
+          "name": "Focus",
+          "type": "focus"
+        },
+        {
+          "offset": 9,
+          "name": "Pan",
+          "type": "pan"
+        },
+        {
+          "offset": 10,
+          "name": "Pan Fine",
+          "type": "panFine"
+        },
+        {
+          "offset": 11,
+          "name": "Tilt",
+          "type": "tilt"
+        },
+        {
+          "offset": 12,
+          "name": "Tilt Fine",
+          "type": "tiltFine"
+        },
+        {
+          "offset": 13,
+          "name": "Function",
+          "type": "function"
+        },
+        {
+          "offset": 14,
+          "name": "Reset",
+          "type": "reset"
+        },
+        {
+          "offset": 15,
+          "name": "Lamp Control",
+          "type": "function"
+        }
+      ]
+    },
+    {
+      "id": "martin_mac_aura",
+      "name": "Martin MAC Aura",
+      "manufacturer": "Martin",
+      "channelCount": 18,
+      "channels": [
+        {
+          "offset": 0,
+          "name": "Dimmer",
+          "type": "dimmer"
+        },
+        {
+          "offset": 1,
+          "name": "Dimmer Fine",
+          "type": "dimmer"
+        },
+        {
+          "offset": 2,
+          "name": "Red",
+          "type": "red"
+        },
+        {
+          "offset": 3,
+          "name": "Red Fine",
+          "type": "red"
+        },
+        {
+          "offset": 4,
+          "name": "Green",
+          "type": "green"
+        },
+        {
+          "offset": 5,
+          "name": "Green Fine",
+          "type": "green"
+        },
+        {
+          "offset": 6,
+          "name": "Blue",
+          "type": "blue"
+        },
+        {
+          "offset": 7,
+          "name": "Blue Fine",
+          "type": "blue"
+        },
+        {
+          "offset": 8,
+          "name": "White",
+          "type": "white"
+        },
+        {
+          "offset": 9,
+          "name": "White Fine",
+          "type": "white"
+        },
+        {
+          "offset": 10,
+          "name": "Strobe",
+          "type": "strobe"
+        },
+        {
+          "offset": 11,
+          "name": "Zoom",
+          "type": "zoom"
+        },
+        {
+          "offset": 12,
+          "name": "Pan",
+          "type": "pan"
+        },
+        {
+          "offset": 13,
+          "name": "Pan Fine",
+          "type": "panFine"
+        },
+        {
+          "offset": 14,
+          "name": "Tilt",
+          "type": "tilt"
+        },
+        {
+          "offset": 15,
+          "name": "Tilt Fine",
+          "type": "tiltFine"
+        },
+        {
+          "offset": 16,
+          "name": "Color Macro",
+          "type": "macro"
+        },
+        {
+          "offset": 17,
+          "name": "Reset",
+          "type": "reset"
+        }
+      ]
+    },
+    {
+      "id": "robe_robin_600_ledwash",
+      "name": "Robe Robin 600 LEDWash",
+      "manufacturer": "Robe",
+      "channelCount": 20,
+      "channels": [
+        {
+          "offset": 0,
+          "name": "Pan",
+          "type": "pan"
+        },
+        {
+          "offset": 1,
+          "name": "Pan Fine",
+          "type": "panFine"
+        },
+        {
+          "offset": 2,
+          "name": "Tilt",
+          "type": "tilt"
+        },
+        {
+          "offset": 3,
+          "name": "Tilt Fine",
+          "type": "tiltFine"
+        },
+        {
+          "offset": 4,
+          "name": "Pan/Tilt Speed",
+          "type": "speed"
+        },
+        {
+          "offset": 5,
+          "name": "Power/Special Functions",
+          "type": "function"
+        },
+        {
+          "offset": 6,
+          "name": "Virtual Color Wheel",
+          "type": "colorWheel"
+        },
+        {
+          "offset": 7,
+          "name": "Red",
+          "type": "red"
+        },
+        {
+          "offset": 8,
+          "name": "Red Fine",
+          "type": "red"
+        },
+        {
+          "offset": 9,
+          "name": "Green",
+          "type": "green"
+        },
+        {
+          "offset": 10,
+          "name": "Green Fine",
+          "type": "green"
+        },
+        {
+          "offset": 11,
+          "name": "Blue",
+          "type": "blue"
+        },
+        {
+          "offset": 12,
+          "name": "Blue Fine",
+          "type": "blue"
+        },
+        {
+          "offset": 13,
+          "name": "White",
+          "type": "white"
+        },
+        {
+          "offset": 14,
+          "name": "White Fine",
+          "type": "white"
+        },
+        {
+          "offset": 15,
+          "name": "CTC",
+          "type": "function"
+        },
+        {
+          "offset": 16,
+          "name": "Zoom",
+          "type": "zoom"
+        },
+        {
+          "offset": 17,
+          "name": "Shutter/Strobe",
+          "type": "strobe"
+        },
+        {
+          "offset": 18,
+          "name": "Dimmer",
+          "type": "dimmer"
+        },
+        {
+          "offset": 19,
+          "name": "Dimmer Fine",
+          "type": "dimmer"
+        }
+      ]
+    },
+    {
+      "id": "chauvet_rogue_r2_spot",
+      "name": "Chauvet Rogue R2 Spot",
+      "manufacturer": "Chauvet",
+      "channelCount": 17,
+      "channels": [
+        {
+          "offset": 0,
+          "name": "Pan",
+          "type": "pan"
+        },
+        {
+          "offset": 1,
+          "name": "Pan Fine",
+          "type": "panFine"
+        },
+        {
+          "offset": 2,
+          "name": "Tilt",
+          "type": "tilt"
+        },
+        {
+          "offset": 3,
+          "name": "Tilt Fine",
+          "type": "tiltFine"
+        },
+        {
+          "offset": 4,
+          "name": "Pan/Tilt Speed",
+          "type": "speed"
+        },
+        {
+          "offset": 5,
+          "name": "Dimmer",
+          "type": "dimmer"
+        },
+        {
+          "offset": 6,
+          "name": "Shutter",
+          "type": "shutter"
+        },
+        {
+          "offset": 7,
+          "name": "Color Wheel",
+          "type": "colorWheel"
+        },
+        {
+          "offset": 8,
+          "name": "Gobo Wheel 1",
+          "type": "gobo"
+        },
+        {
+          "offset": 9,
+          "name": "Gobo Wheel 1 Rotation",
+          "type": "goboRotation"
+        },
+        {
+          "offset": 10,
+          "name": "Gobo Wheel 2",
+          "type": "gobo"
+        },
+        {
+          "offset": 11,
+          "name": "Prism",
+          "type": "prism"
+        },
+        {
+          "offset": 12,
+          "name": "Prism Rotation",
+          "type": "prismRotation"
+        },
+        {
+          "offset": 13,
+          "name": "Focus",
+          "type": "focus"
+        },
+        {
+          "offset": 14,
+          "name": "Zoom",
+          "type": "zoom"
+        },
+        {
+          "offset": 15,
+          "name": "Frost",
+          "type": "frost"
+        },
+        {
+          "offset": 16,
+          "name": "Control",
+          "type": "function"
+        }
+      ]
+    },
+    {
+      "id": "adj_vizi_beam_5rx",
+      "name": "ADJ Vizi Beam 5RX",
+      "manufacturer": "ADJ",
+      "channelCount": 14,
+      "channels": [
+        {
+          "offset": 0,
+          "name": "Pan",
+          "type": "pan"
+        },
+        {
+          "offset": 1,
+          "name": "Tilt",
+          "type": "tilt"
+        },
+        {
+          "offset": 2,
+          "name": "Color Wheel",
+          "type": "colorWheel"
+        },
+        {
+          "offset": 3,
+          "name": "Gobo Wheel",
+          "type": "gobo"
+        },
+        {
+          "offset": 4,
+          "name": "Prism",
+          "type": "prism"
+        },
+        {
+          "offset": 5,
+          "name": "Gobo Rotation",
+          "type": "goboRotation"
+        },
+        {
+          "offset": 6,
+          "name": "Focus",
+          "type": "focus"
+        },
+        {
+          "offset": 7,
+          "name": "Dimmer",
+          "type": "dimmer"
+        },
+        {
+          "offset": 8,
+          "name": "Shutter/Strobe",
+          "type": "strobe"
+        },
+        {
+          "offset": 9,
+          "name": "Pan Fine",
+          "type": "panFine"
+        },
+        {
+          "offset": 10,
+          "name": "Tilt Fine",
+          "type": "tiltFine"
+        },
+        {
+          "offset": 11,
+          "name": "Frost",
+          "type": "frost"
+        },
+        {
+          "offset": 12,
+          "name": "Pan/Tilt Speed",
+          "type": "speed"
+        },
+        {
+          "offset": 13,
+          "name": "Special Functions",
+          "type": "function"
+        }
+      ]
+    },
+    {
+      "id": "generic_led_par_64_rgbw",
+      "name": "Generic LED PAR 64 RGBW",
+      "manufacturer": "Generic",
+      "channelCount": 8,
+      "channels": [
+        {
+          "offset": 0,
+          "name": "Red",
+          "type": "red"
+        },
+        {
+          "offset": 1,
+          "name": "Green",
+          "type": "green"
+        },
+        {
+          "offset": 2,
+          "name": "Blue",
+          "type": "blue"
+        },
+        {
+          "offset": 3,
+          "name": "White",
+          "type": "white"
+        },
+        {
+          "offset": 4,
+          "name": "Dimmer",
+          "type": "dimmer"
+        },
+        {
+          "offset": 5,
+          "name": "Strobe",
+          "type": "strobe"
+        },
+        {
+          "offset": 6,
+          "name": "Color Macro",
+          "type": "macro"
+        },
+        {
+          "offset": 7,
+          "name": "Program Speed",
+          "type": "speed"
+        }
+      ]
+    },
+    {
+      "id": "elation_platinum_spot_5r",
+      "name": "Elation Platinum Spot 5R",
+      "manufacturer": "Elation",
+      "channelCount": 16,
+      "channels": [
+        {
+          "offset": 0,
+          "name": "Pan",
+          "type": "pan"
+        },
+        {
+          "offset": 1,
+          "name": "Pan Fine",
+          "type": "panFine"
+        },
+        {
+          "offset": 2,
+          "name": "Tilt",
+          "type": "tilt"
+        },
+        {
+          "offset": 3,
+          "name": "Tilt Fine",
+          "type": "tiltFine"
+        },
+        {
+          "offset": 4,
+          "name": "Color Wheel",
+          "type": "colorWheel"
+        },
+        {
+          "offset": 5,
+          "name": "Gobo Wheel 1",
+          "type": "gobo"
+        },
+        {
+          "offset": 6,
+          "name": "Gobo Rotation",
+          "type": "goboRotation"
+        },
+        {
+          "offset": 7,
+          "name": "Gobo Wheel 2",
+          "type": "gobo"
+        },
+        {
+          "offset": 8,
+          "name": "Prism",
+          "type": "prism"
+        },
+        {
+          "offset": 9,
+          "name": "Prism Rotation",
+          "type": "prismRotation"
+        },
+        {
+          "offset": 10,
+          "name": "Focus",
+          "type": "focus"
+        },
+        {
+          "offset": 11,
+          "name": "Iris",
+          "type": "iris"
+        },
+        {
+          "offset": 12,
+          "name": "Shutter/Strobe",
+          "type": "strobe"
+        },
+        {
+          "offset": 13,
+          "name": "Dimmer",
+          "type": "dimmer"
+        },
+        {
+          "offset": 14,
+          "name": "Frost",
+          "type": "frost"
+        },
+        {
+          "offset": 15,
+          "name": "Control",
+          "type": "function"
+        }
+      ]
+    }
+  ]
+}
