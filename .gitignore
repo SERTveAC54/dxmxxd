@@ -43,3 +43,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Gradle wrapper binary (too large for GitHub)
+android/gradle/wrapper/gradle.zip
+android/gradle/wrapper/*.jar
