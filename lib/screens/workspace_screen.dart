@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart'; // Mouse tekerleği ile kaydırma için gerekli
 import 'package:provider/provider.dart';
 import '../services/fixture_manager.dart';
 import '../services/dmx_engine.dart';
@@ -25,9 +26,10 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
   String _activeGroupName = "Manuel Seçim";
   bool _isSidebarOpen = false; 
   
-  // KAYDIRMA İÇİN SCROLL KONTROLCÜSÜ EKLENDİ
+  // KAYDIRMA İÇİN SCROLL KONTROLCÜSÜ
   final ScrollController _scrollController = ScrollController();
 
+  // Kullanıcının oluşturduğu gruplar
   final List<FixtureGroup> _userGroups = [];
 
   @override
@@ -52,10 +54,14 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
     });
   }
 
+  // --- YENİ GRUP EKLEME PENCERESİ ---
   void _showCreateGroupDialog() {
     if (_selectedFixtureIds.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Önce gruba eklenecek robotları seçmelisin!"), backgroundColor: Colors.redAccent),
+        const SnackBar(
+          content: Text("Önce gruba eklenecek robotları seçmelisin!"), 
+          backgroundColor: Colors.redAccent
+        ),
       );
       return;
     }
@@ -115,6 +121,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
       body: SafeArea(
         child: Stack(
           children: [
+            // 1. ANA ÇALIŞMA ALANI
             Column(
               children: [
                 _buildTopInfoBar(),
@@ -126,12 +133,14 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
               ],
             ),
 
+            // 2. KARARTMA EFEKTİ (Menü açıkken dışı karartır)
             if (_isSidebarOpen)
               GestureDetector(
                 onTap: _toggleSidebar,
                 child: Container(color: Colors.black.withOpacity(0.5)),
               ),
 
+            // 3. SOLDAN KAYARAK AÇILAN PANEL
             AnimatedPositioned(
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOutBack,
@@ -347,43 +356,58 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch, 
         children: [
-          // YATAY KAYDIRMA ÇUBUĞU (SCROLLBAR) VE LİSTE EKLENDİ
+          // FADER LİSTESİ VE KAYDIRMA ÇUBUĞU
           Expanded(
             flex: 4, 
-            child: RawScrollbar(
-              controller: _scrollController,
-              thumbColor: const Color(0xFF00E5FF).withOpacity(0.8), // Neon kaydırma çubuğu
-              radius: const Radius.circular(8),
-              thickness: 8,
-              interactive: true, // Elle tutup çekilebilir
-              padding: const EdgeInsets.only(bottom: 2),
-              child: ListView.builder(
-                controller: _scrollController,
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()), // Daha pürüzsüz kaydırma
-                padding: const EdgeInsets.only(bottom: 16), // Alt boşluk Scrollbar'ın görünmesi için
-                itemCount: sliderChannels.length,
-                itemBuilder: (context, index) {
-                  final ch = sliderChannels[index];
-                  final value = dmx.getChannel(refFixture.startAddress! + ch.offset) / 255.0;
-                  
-                  Color faderColor = const Color(0xFF4A90E2);
-                  if (ch.type == ChannelType.red) faderColor = Colors.redAccent;
-                  if (ch.type == ChannelType.green) faderColor = Colors.greenAccent;
-                  if (ch.type == ChannelType.blue) faderColor = Colors.blueAccent;
-                  if (ch.name.toLowerCase().contains('dimmer')) faderColor = Colors.white;
-
-                  return ProFader(
-                    label: ch.name,
-                    value: value,
-                    activeColor: faderColor,
-                    onChanged: (val) => _updateGroupChannel(manager, dmx, ch.type, (val * 255).round()),
+            child: Listener(
+              onPointerSignal: (pointerSignal) {
+                if (pointerSignal is PointerScrollEvent) {
+                  // Fare tekerleği yatay kaydırma için dinleniyor
+                  final offset = pointerSignal.scrollDelta.dy * 2.0; 
+                  _scrollController.jumpTo(
+                    (_scrollController.offset + offset).clamp(
+                      0.0,
+                      _scrollController.position.maxScrollExtent,
+                    ),
                   );
-                },
+                }
+              },
+              child: RawScrollbar(
+                controller: _scrollController,
+                thumbColor: const Color(0xFF00E5FF).withOpacity(0.8), 
+                radius: const Radius.circular(8),
+                thickness: 8,
+                interactive: true, 
+                padding: const EdgeInsets.only(bottom: 2),
+                child: ListView.builder(
+                  controller: _scrollController,
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()), 
+                  padding: const EdgeInsets.only(bottom: 16), 
+                  itemCount: sliderChannels.length,
+                  itemBuilder: (context, index) {
+                    final ch = sliderChannels[index];
+                    final value = dmx.getChannel(refFixture.startAddress! + ch.offset) / 255.0;
+                    
+                    Color faderColor = const Color(0xFF4A90E2);
+                    if (ch.type == ChannelType.red) faderColor = Colors.redAccent;
+                    if (ch.type == ChannelType.green) faderColor = Colors.greenAccent;
+                    if (ch.type == ChannelType.blue) faderColor = Colors.blueAccent;
+                    if (ch.name.toLowerCase().contains('dimmer')) faderColor = Colors.white;
+
+                    return ProFader(
+                      label: ch.name,
+                      value: value,
+                      activeColor: faderColor,
+                      onChanged: (val) => _updateGroupChannel(manager, dmx, ch.type, (val * 255).round()),
+                    );
+                  },
+                ),
               ),
             ),
           ),
           
+          // XY PAD BÖLÜMÜ
           Container(
             width: 280, 
             margin: const EdgeInsets.only(left: 24),
@@ -413,6 +437,9 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
   }
 }
 
+// ---------------------------------------------------------
+// PROFESYONEL LUMINAIRE TARZI CUSTOM FADER (KAYDIRICI)
+// ---------------------------------------------------------
 class ProFader extends StatefulWidget {
   final String label;
   final double value; 
@@ -478,7 +505,6 @@ class _ProFaderState extends State<ProFader> {
 
                 return GestureDetector(
                   behavior: HitTestBehavior.opaque, 
-                  // onTapDown BURADAN KALDIRILDI! ARTIK YANLIŞLIKLA EKRAN KAYDIRIRKEN DEĞER DEĞİŞMEYECEK.
                   onVerticalDragStart: (details) {
                     _handleDrag(details.localPosition.dy, trackHeight);
                   },
