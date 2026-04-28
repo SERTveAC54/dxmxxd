@@ -1,4 +1,4 @@
-name: dmx_artnet_controller
+﻿name: dmx_artnet_controller
 description: Professional DMX512 Art-Net lighting controller for stage lighting
 publish_to: 'none'
 version: 1.0.0+1
@@ -12,6 +12,7 @@ dependencies:
   provider: ^6.1.1
   shared_preferences: ^2.2.2
   uuid: ^4.2.1
+  xml: ^6.5.0
 
 dev_dependencies:
   flutter_test:
@@ -21,65 +22,46 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   
-  # Fixture kütüphanesi - Tüm marka klasörleri
   assets:
     - assets/fixtures/
-    - assets/fixtures/library_full.json
-    - assets/fixtures/5Star Systems/
+    - assets/fixtures/fixture_manifest.json
     - assets/fixtures/Abstract/
     - assets/fixtures/Acme/
-    - assets/fixtures/Acoustic Control/
     - assets/fixtures/ADB/
     - assets/fixtures/AFX/
     - assets/fixtures/AGPtek/
     - assets/fixtures/Alkalite/
     - assets/fixtures/Altman/
-    - assets/fixtures/American DJ/
     - assets/fixtures/American_DJ/
     - assets/fixtures/Antari/
-    - assets/fixtures/Ape Labs/
-    - assets/fixtures/Aputure/
-    - assets/fixtures/ARRI/
     - assets/fixtures/Art_System/
     - assets/fixtures/Astera/
     - assets/fixtures/Audibax/
-    - assets/fixtures/Aurora/
     - assets/fixtures/AVE/
     - assets/fixtures/Ayra/
     - assets/fixtures/Ayrton/
-    - assets/fixtures/BeamZ/
+    - assets/fixtures/beamZ/
     - assets/fixtures/Betopper/
-    - assets/fixtures/Big Dipper/
-    - assets/fixtures/Bitfocus/
-    - assets/fixtures/Blizzard/
     - assets/fixtures/Blizzard_Lighting/
     - assets/fixtures/BoomToneDJ/
     - assets/fixtures/Botex/
     - assets/fixtures/Bright/
     - assets/fixtures/Briteq/
-    - assets/fixtures/cameo/
+    - assets/fixtures/Cameo/
     - assets/fixtures/Chauvet/
-    - assets/fixtures/Chauvet DJ/
-    - assets/fixtures/Chauvet Professional/
-    - assets/fixtures/Cinetec/
-    - assets/fixtures/Clay Paky/
     - assets/fixtures/Clay_Paky/
     - assets/fixtures/CLF/
     - assets/fixtures/Coemar/
     - assets/fixtures/Color_Imagination/
     - assets/fixtures/ColorKey/
     - assets/fixtures/Contest/
-    - assets/fixtures/Dedolight/
-    - assets/fixtures/Desisti/
     - assets/fixtures/Dia_Lighting/
-    - assets/fixtures/DMG Lumière/
     - assets/fixtures/DNA/
     - assets/fixtures/DTS/
     - assets/fixtures/Dune_Lighting/
     - assets/fixtures/EK/
     - assets/fixtures/Elation/
     - assets/fixtures/Electroconcept/
-    - assets/fixtures/Eliminator Lighting/
     - assets/fixtures/Eliminator_Lighting/
     - assets/fixtures/Elumen8/
     - assets/fixtures/Enterius/
@@ -89,112 +71,71 @@ flutter:
     - assets/fixtures/ETC/
     - assets/fixtures/ETEC/
     - assets/fixtures/Eurolite/
-    - assets/fixtures/Event Lighting/
     - assets/fixtures/Event_Lighting/
     - assets/fixtures/Evolight/
-    - assets/fixtures/Explo/
     - assets/fixtures/Expolite/
-    - assets/fixtures/Eyourlife/
-    - assets/fixtures/Fiilex/
-    - assets/fixtures/Flash Professional/
     - assets/fixtures/Flash-Butrym/
     - assets/fixtures/FOS_Technologies/
-    - assets/fixtures/Fovitec/
-    - assets/fixtures/Fractal Lights/
-    - assets/fixtures/Fun Generation/
     - assets/fixtures/Fun-Generation/
     - assets/fixtures/Futurelight/
-    - assets/fixtures/Galaxis/
-    - assets/fixtures/Gantom/
     - assets/fixtures/Generic/
     - assets/fixtures/Geni/
-    - assets/fixtures/German Light Products/
     - assets/fixtures/Ghost/
     - assets/fixtures/GLP/
     - assets/fixtures/GLX_Lighting/
     - assets/fixtures/Griven/
-    - assets/fixtures/Gruft/
     - assets/fixtures/GTD/
-    - assets/fixtures/Hazebase/
     - assets/fixtures/High_End_Systems/
-    - assets/fixtures/Hive Lighting/
-    - assets/fixtures/Hong Yi/
     - assets/fixtures/HQ_Power/
-    - assets/fixtures/HSL/
-    - assets/fixtures/Ibiza/
-    - assets/fixtures/Ibiza light/
-    - assets/fixtures/Ignition/
-    - assets/fixtures/Ikan/
-    - assets/fixtures/IMG_Stageline/
-    - assets/fixtures/Infinity/
-    - assets/fixtures/Involight/
     - assets/fixtures/i-Pix/
+    - assets/fixtures/Ibiza/
+    - assets/fixtures/IMG_Stageline/
+    - assets/fixtures/Involight/
     - assets/fixtures/iSolution/
-    - assets/fixtures/JB Systems/
-    - assets/fixtures/JB_Systems/
     - assets/fixtures/JB-Lighting/
-    - assets/fixtures/KAM/
-    - assets/fixtures/Kino Flo/
+    - assets/fixtures/JB_Systems/
+    - assets/fixtures/Kam/
     - assets/fixtures/KOOLlight/
-    - assets/fixtures/LaluceNatz/
     - assets/fixtures/Lanta/
     - assets/fixtures/Laserworld/
     - assets/fixtures/LDDE/
     - assets/fixtures/Ledj/
     - assets/fixtures/LedProLight/
-    - assets/fixtures/LEP-LASER/
-    - assets/fixtures/LIGHT SKY/
     - assets/fixtures/Light_Emotion/
     - assets/fixtures/lightmaXX/
     - assets/fixtures/Lightronics/
-    - assets/fixtures/Litecraft/
-    - assets/fixtures/LiteGear/
-    - assets/fixtures/Lite-Tek/
     - assets/fixtures/Lite-Works/
+    - assets/fixtures/Litecraft/
     - assets/fixtures/Lixada/
-    - assets/fixtures/Look Solutions/
     - assets/fixtures/Look_Solutions/
     - assets/fixtures/Lumeri/
-    - assets/fixtures/Lupo/
     - assets/fixtures/Luxibel/
     - assets/fixtures/Mac_Mah/
     - assets/fixtures/MagicFX/
-    - assets/fixtures/Mark/
     - assets/fixtures/MARQ/
     - assets/fixtures/Martin/
     - assets/fixtures/MDG/
-    - assets/fixtures/Mega LED Lighting/
-    - assets/fixtures/MegaLite/
     - assets/fixtures/MEGA-Lite/
     - assets/fixtures/MFL/
     - assets/fixtures/Microh/
-    - assets/fixtures/Minuit Une/
     - assets/fixtures/Monacor/
     - assets/fixtures/Movitec/
     - assets/fixtures/N-Gear/
     - assets/fixtures/Nicols/
     - assets/fixtures/NJD/
     - assets/fixtures/Optima_Lighting/
-    - assets/fixtures/Orion Effects Lighting/
     - assets/fixtures/Orion_Effects_Lighting/
     - assets/fixtures/OXO/
-    - assets/fixtures/Panasonic/
     - assets/fixtures/Philips_Selecon/
-    - assets/fixtures/Phocea Light/
     - assets/fixtures/PixelRANGE/
-    - assets/fixtures/Power Lighting/
-    - assets/fixtures/PR LIGHTING/
     - assets/fixtures/PR_Lighting/
-    - assets/fixtures/Proel/
-    - assets/fixtures/Prolights/
     - assets/fixtures/Pro-Lights/
+    - assets/fixtures/Proel/
     - assets/fixtures/PSL/
     - assets/fixtures/Pulse/
     - assets/fixtures/QTX/
     - assets/fixtures/ReelEfx/
-    - assets/fixtures/Renkforce/
     - assets/fixtures/Robe/
-    - assets/fixtures/Robert Juliat/
     - assets/fixtures/Robert_Juliat/
     - assets/fixtures/Rockville/
     - assets/fixtures/Rosco/
@@ -205,14 +146,8 @@ flutter:
     - assets/fixtures/Shehds/
     - assets/fixtures/Showlite/
     - assets/fixtures/Showtec/
-    - assets/fixtures/Showven/
-    - assets/fixtures/Silver Star/
-    - assets/fixtures/Smoke Factory/
     - assets/fixtures/Smoke_Factory/
-    - assets/fixtures/Solaris/
     - assets/fixtures/Solena/
-    - assets/fixtures/SoundLight/
-    - assets/fixtures/Stage Right/
     - assets/fixtures/Stage_Right/
     - assets/fixtures/StageTech/
     - assets/fixtures/Stagg/
@@ -220,18 +155,13 @@ flutter:
     - assets/fixtures/Star-Lights/
     - assets/fixtures/Starway/
     - assets/fixtures/Stellar_Labs/
-    - assets/fixtures/Studio Due/
     - assets/fixtures/Studio_Due/
-    - assets/fixtures/Sun Star/
     - assets/fixtures/Talent/
     - assets/fixtures/Tecshow/
-    - assets/fixtures/TIPTOP Stage Light/
     - assets/fixtures/Tomshine/
     - assets/fixtures/Triton_Blue/
     - assets/fixtures/TSSS/
-    - assets/fixtures/U`King/
     - assets/fixtures/UKing/
-    - assets/fixtures/Ultratec/
     - assets/fixtures/Vari-Lite/
     - assets/fixtures/Varytec/
     - assets/fixtures/Velleman/

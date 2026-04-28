@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ArtNetService extends ChangeNotifier {
   RawDatagramSocket? _socket;
   
-  String _targetIP = '192.168.1.100';
+  String _targetIP = '192.168.4.1'; // ESP32 AP default IP
   int _universe = 0;
   int _port = 6454;
   
@@ -24,7 +24,7 @@ class ArtNetService extends ChangeNotifier {
   /// Ayarları yükle
   Future<void> _loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
-    _targetIP = prefs.getString('artnet_ip') ?? '192.168.1.100';
+    _targetIP = prefs.getString('artnet_ip') ?? '192.168.4.1'; // ESP32 AP default
     _universe = prefs.getInt('artnet_universe') ?? 0;
     notifyListeners();
   }
